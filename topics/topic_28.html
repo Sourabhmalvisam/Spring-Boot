@@ -1,0 +1,1084 @@
+<html><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Spring Boot</title>
+<style>
+		/* cspell:disable-file */
+		/* webkit printing magic: print all background colors */
+		html {
+			-webkit-print-color-adjust: exact;
+		}
+
+		* {
+			box-sizing: border-box;
+			-webkit-print-color-adjust: exact;
+		}
+
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		@media only screen {
+			body {
+				margin: 2em auto;
+				max-width: 900px;
+				color: rgb(55, 53, 47);
+			}
+		}
+
+		body {
+			line-height: 1.5;
+			white-space: nowrap;
+		}
+
+		a,
+		a.visited {
+			color: inherit;
+			text-decoration: underline;
+		}
+
+		.pdf-relative-link-path {
+			font-size: 80%;
+			color: #444;
+		}
+
+		h1,
+		h2,
+		h3 {
+			letter-spacing: -0.01em;
+			line-height: 1.2;
+			font-weight: 600;
+			margin-bottom: 0;
+		}
+
+		.page-title {
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin-top: 0;
+			margin-bottom: 0.75em;
+		}
+
+		h1 {
+			font-size: 1.875rem;
+			margin-top: 1.875rem;
+		}
+
+		h2 {
+			font-size: 1.5rem;
+			margin-top: 1.5rem;
+		}
+
+		h3 {
+			font-size: 1.25rem;
+			margin-top: 1.25rem;
+		}
+
+		.source {
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			padding: 1.5em;
+			word-break: break-all;
+		}
+
+		.callout {
+			border-radius: 3px;
+			padding: 1rem;
+		}
+
+		figure {
+			margin: 1.25em 0;
+			page-break-inside: avoid;
+		}
+
+		figcaption {
+			opacity: 0.5;
+			font-size: 85%;
+			margin-top: 0.5em;
+		}
+
+		mark {
+			background-color: transparent;
+		}
+
+		.indented {
+			padding-left: 1.5em;
+		}
+
+		hr {
+			background: transparent;
+			display: block;
+			width: 100%;
+			height: 1px;
+			visibility: visible;
+			border: none;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+		}
+
+		img {
+			max-width: 100%;
+		}
+
+		@media only print {
+			img {
+				max-height: 100vh;
+				object-fit: contain;
+			}
+		}
+
+		@page {
+			margin: 1in;
+		}
+
+		.collection-content {
+			font-size: 0.875rem;
+		}
+
+		.column-list {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.column {
+			padding: 0 1em;
+		}
+
+		.column:first-child {
+			padding-left: 0;
+		}
+
+		.column:last-child {
+			padding-right: 0;
+		}
+
+		.table_of_contents-item {
+			display: block;
+			font-size: 0.875rem;
+			line-height: 1.3;
+			padding: 0.125rem;
+		}
+
+		.table_of_contents-indent-1 {
+			margin-left: 1.5rem;
+		}
+
+		.table_of_contents-indent-2 {
+			margin-left: 3rem;
+		}
+
+		.table_of_contents-indent-3 {
+			margin-left: 4.5rem;
+		}
+
+		.table_of_contents-link {
+			text-decoration: none;
+			opacity: 0.7;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid rgba(55, 53, 47, 0.09);
+			border-collapse: collapse;
+		}
+
+		table {
+			border-left: none;
+			border-right: none;
+		}
+
+		th,
+		td {
+			font-weight: normal;
+			padding: 0.25em 0.5em;
+			line-height: 1.5;
+			min-height: 1.5em;
+			text-align: left;
+		}
+
+		th {
+			color: rgba(55, 53, 47, 0.6);
+		}
+
+		ol,
+		ul {
+			margin: 0;
+			margin-block-start: 0.6em;
+			margin-block-end: 0.6em;
+		}
+
+		li>ol:first-child,
+		li>ul:first-child {
+			margin-block-start: 0.6em;
+		}
+
+		ul>li {
+			list-style: disc;
+		}
+
+		ul.to-do-list {
+			padding-inline-start: 0;
+		}
+
+		ul.to-do-list>li {
+			list-style: none;
+		}
+
+		.to-do-children-checked {
+			text-decoration: line-through;
+			opacity: 0.375;
+		}
+
+		ul.toggle>li {
+			list-style: none;
+		}
+
+		ul {
+			padding-inline-start: 1.7em;
+		}
+
+		ul>li {
+			padding-left: 0.1em;
+		}
+
+		ol {
+			padding-inline-start: 1.6em;
+		}
+
+		ol>li {
+			padding-left: 0.2em;
+		}
+
+		.mono ol {
+			padding-inline-start: 2em;
+		}
+
+		.mono ol>li {
+			text-indent: -0.4em;
+		}
+
+		.toggle {
+			padding-inline-start: 0em;
+			list-style-type: none;
+		}
+
+		/* Indent toggle children */
+		.toggle>li>details {
+			padding-left: 1.7em;
+		}
+
+		.toggle>li>details>summary {
+			margin-left: -1.1em;
+		}
+
+		.selected-value {
+			display: inline-block;
+			padding: 0 0.5em;
+			background: rgba(206, 205, 202, 0.5);
+			border-radius: 3px;
+			margin-right: 0.5em;
+			margin-top: 0.3em;
+			margin-bottom: 0.3em;
+			white-space: nowrap;
+		}
+
+		.collection-title {
+			display: inline-block;
+			margin-right: 1em;
+		}
+
+		.page-description {
+			margin-bottom: 2em;
+		}
+
+		.simple-table {
+			margin-top: 1em;
+			font-size: 0.875rem;
+			empty-cells: show;
+		}
+
+		.simple-table td {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table th {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table-header-color {
+			background: rgb(247, 246, 243);
+			color: black;
+		}
+
+		.simple-table-header {
+			font-weight: 500;
+		}
+
+		time {
+			opacity: 0.5;
+		}
+
+		.icon {
+			display: inline-block;
+			max-width: 1.2em;
+			max-height: 1.2em;
+			text-decoration: none;
+			vertical-align: text-bottom;
+			margin-right: 0.5em;
+		}
+
+		img.icon {
+			border-radius: 3px;
+		}
+
+		.user-icon {
+			width: 1.5em;
+			height: 1.5em;
+			border-radius: 100%;
+			margin-right: 0.5rem;
+		}
+
+		.user-icon-inner {
+			font-size: 0.8em;
+		}
+
+		.text-icon {
+			border: 1px solid #000;
+			text-align: center;
+		}
+
+		.page-cover-image {
+			display: block;
+			object-fit: cover;
+			width: 100%;
+			max-height: 30vh;
+		}
+
+		.page-header-icon {
+			font-size: 3rem;
+			margin-bottom: 1rem;
+		}
+
+		.page-header-icon-with-cover {
+			margin-top: -0.72em;
+			margin-left: 0.07em;
+		}
+
+		.page-header-icon img {
+			border-radius: 3px;
+		}
+
+		.link-to-page {
+			margin: 1em 0;
+			padding: 0;
+			border: none;
+			font-weight: 500;
+		}
+
+		p>.user {
+			opacity: 0.5;
+		}
+
+		td>.user,
+		td>time {
+			white-space: nowrap;
+		}
+
+		input[type="checkbox"] {
+			transform: scale(1.5);
+			margin-right: 0.6em;
+			vertical-align: middle;
+		}
+
+		p {
+			margin-top: 0.5em;
+			margin-bottom: 0.5em;
+		}
+
+		.image {
+			border: none;
+			margin: 1.5em 0;
+			padding: 0;
+			border-radius: 0;
+			text-align: center;
+		}
+
+		.code,
+		code {
+			background: rgba(135, 131, 120, 0.15);
+			border-radius: 3px;
+			padding: 0.2em 0.4em;
+			border-radius: 3px;
+			font-size: 85%;
+			tab-size: 2;
+		}
+
+		code {
+			color: #eb5757;
+		}
+
+		.code {
+			padding: 1.5em 1em;
+		}
+
+		.code-wrap {
+			white-space: nowrap;
+			word-break: break-all;
+		}
+
+		.code>code {
+			background: none;
+			padding: 0;
+			font-size: 100%;
+			color: inherit;
+		}
+
+		blockquote {
+			font-size: 1.25em;
+			margin: 1em 0;
+			padding-left: 1em;
+			border-left: 3px solid rgb(55, 53, 47);
+		}
+
+		.bookmark {
+			text-decoration: none;
+			max-height: 8em;
+			padding: 0;
+			display: flex;
+			width: 100%;
+			align-items: stretch;
+		}
+
+		.bookmark-title {
+			font-size: 0.85em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: 1.75em;
+			white-space: nowrap;
+		}
+
+		.bookmark-text {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.bookmark-info {
+			flex: 4 1 180px;
+			padding: 12px 14px 14px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.bookmark-image {
+			width: 33%;
+			flex: 1 1 180px;
+			display: block;
+			position: relative;
+			object-fit: cover;
+			border-radius: 1px;
+		}
+
+		.bookmark-description {
+			color: rgba(55, 53, 47, 0.6);
+			font-size: 0.75em;
+			overflow: hidden;
+			max-height: 4.5em;
+			word-break: break-word;
+		}
+
+		.bookmark-href {
+			font-size: 0.75em;
+			margin-top: 0.25em;
+		}
+
+		.sans {
+			font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+		}
+
+		.code {
+			font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+		}
+
+		.serif {
+			font-family: Lyon-Text, Georgia, ui-serif, serif;
+		}
+
+		.mono {
+			font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+		}
+
+		.pdf .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR';
+		}
+
+		.pdf .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.pdf .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR';
+		}
+
+		.pdf .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.highlight-default {
+			color: rgba(50, 48, 44, 1);
+		}
+
+		.highlight-gray {
+			color: rgba(115, 114, 110, 1);
+			fill: rgba(115, 114, 110, 1);
+		}
+
+		.highlight-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.highlight-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.highlight-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.highlight-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.highlight-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.highlight-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.highlight-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.highlight-red {
+			color: rgba(205, 60, 58, 1);
+			fill: rgba(205, 60, 58, 1);
+		}
+
+		.highlight-default_background {
+			color: rgba(50, 48, 44, 1);
+		}
+
+		.highlight-gray_background {
+			background: rgba(248, 248, 247, 1);
+		}
+
+		.highlight-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.highlight-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.highlight-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.highlight-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.highlight-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.highlight-purple_background {
+			background: rgba(248, 243, 252, 1);
+		}
+
+		.highlight-pink_background {
+			background: rgba(252, 241, 246, 1);
+		}
+
+		.highlight-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.block-color-default {
+			color: inherit;
+			fill: inherit;
+		}
+
+		.block-color-gray {
+			color: rgba(115, 114, 110, 1);
+			fill: rgba(115, 114, 110, 1);
+		}
+
+		.block-color-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.block-color-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.block-color-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.block-color-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.block-color-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.block-color-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.block-color-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.block-color-red {
+			color: rgba(205, 60, 58, 1);
+			fill: rgba(205, 60, 58, 1);
+		}
+
+		.block-color-default_background {
+			color: inherit;
+			fill: inherit;
+		}
+
+		.block-color-gray_background {
+			background: rgba(248, 248, 247, 1);
+		}
+
+		.block-color-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.block-color-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.block-color-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.block-color-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.block-color-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.block-color-purple_background {
+			background: rgba(248, 243, 252, 1);
+		}
+
+		.block-color-pink_background {
+			background: rgba(252, 241, 246, 1);
+		}
+
+		.block-color-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.select-value-color-default {
+			background-color: rgba(84, 72, 49, 0.08);
+		}
+
+		.select-value-color-gray {
+			background-color: rgba(84, 72, 49, 0.15);
+		}
+
+		.select-value-color-brown {
+			background-color: rgba(210, 162, 141, 0.35);
+		}
+
+		.select-value-color-orange {
+			background-color: rgba(224, 124, 57, 0.27);
+		}
+
+		.select-value-color-yellow {
+			background-color: rgba(236, 191, 66, 0.39);
+		}
+
+		.select-value-color-green {
+			background-color: rgba(123, 183, 129, 0.27);
+		}
+
+		.select-value-color-blue {
+			background-color: rgba(93, 165, 206, 0.27);
+		}
+
+		.select-value-color-purple {
+			background-color: rgba(168, 129, 197, 0.27);
+		}
+
+		.select-value-color-pink {
+			background-color: rgba(225, 136, 179, 0.27);
+		}
+
+		.select-value-color-red {
+			background-color: rgba(244, 171, 159, 0.4);
+		}
+
+		.checkbox {
+			display: inline-flex;
+			vertical-align: text-bottom;
+			width: 16;
+			height: 16;
+			background-size: 16px;
+			margin-left: 2px;
+			margin-right: 5px;
+		}
+
+		.checkbox-on {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+
+		.checkbox-off {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+	</style>
+</head><body><h1>Spring boot JPA (Part 7) [One-to-Many: Unidirectional]</h1><h2 class="" id="236b255d-72ff-80d2-aae3-f23a823a7aa7">🔶 1. @OneToMany Mapping (Unidirectional)
+						</h2><h3 class="" id="236b255d-72ff-8049-b35f-e57c421d382f">✅ Definition:</h3><ul class="bulleted-list" id="236b255d-72ff-80ac-9ef2-ee145d4a61a4">
+<li style="list-style-type:disc">One entity (Parent) has <strong>many Child
+									entities</strong>.</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80f6-b979-d5ec8c56e153">
+<li style="list-style-type:disc">Example: A <code>User</code> can have many
+								<code>Orders</code>.</li>
+</ul><hr id="236b255d-72ff-800d-99ad-c90008da01b3"/><h3 class="" id="236b255d-72ff-8020-ae16-f302785e4626">📌 Default Behavior:</h3><table class="simple-table" id="236b255d-72ff-80c5-a66f-d22fbbfbdb88">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8053-9db0-e3bfd2b37f86">
+<th class="simple-table-header-color simple-table-header" id="VI;F">Feature</th>
+<th class="simple-table-header-color simple-table-header" id="@@_h">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80c5-a8cd-d662ab465b3c">
+<td class="" id="VI;F">FK location</td>
+<td class="" id="@@_h"><strong>New Join Table</strong> by default</td>
+</tr>
+<tr id="236b255d-72ff-809a-89fa-e583d3ba03d0">
+<td class="" id="VI;F">Loading Strategy</td>
+<td class="" id="@@_h"><code>LAZY</code></td>
+</tr>
+<tr id="236b255d-72ff-806e-a3d1-df2bb78812e4">
+<td class="" id="VI;F">Cascade</td>
+<td class="" id="@@_h">Not enabled unless specified</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-80b8-9812-c6acb8f1a9c1"/><h3 class="" id="236b255d-72ff-8053-8019-e99fa7ef22c6">✅ Example: Default (New Join Table)</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80a8-8a23-d96634e4e1b8"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Entity
+public class User {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+
+    @OneToMany
+    private List&lt;Order&gt; orders = new ArrayList&lt;&gt;();
+}</code></pre><p class="" id="236b255d-72ff-802d-abff-f56989ba3295">🔹 This will create a new join table like
+							<code>user_orders(user_id, orders_id)</code>.</p><hr id="236b255d-72ff-809a-a2f6-e89053476751"/><h3 class="" id="236b255d-72ff-80c3-8d8f-cb39c6b589dc">✅ Avoiding Join Table with
+							<code>@JoinColumn</code></h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80fd-a131-f5cf55f54e5b"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Entity
+public class User {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id") // FK goes into child (Order) table
+    private List&lt;Order&gt; orders = new ArrayList&lt;&gt;();
+}
+
+@Entity
+public class Order {
+    @Id @GeneratedValue
+    private Long id;
+    private String item;
+}</code></pre><p class="" id="236b255d-72ff-8045-b4f5-d669c379f316">📝 <strong>Why
+							</strong><code><strong>@JoinColumn</strong></code><strong>?</strong></p><ul class="bulleted-list" id="236b255d-72ff-8031-b77b-f661ab8ac388">
+<li style="list-style-type:disc">It avoids creating a separate join table.</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80cd-b3a4-d9891f1e30ba">
+<li style="list-style-type:disc">FK (<code>user_id</code>) is directly present in
+								<code>Order</code> table.</li>
+</ul><hr id="236b255d-72ff-800d-8287-e0dfe1e5923d"/><h3 class="" id="236b255d-72ff-80bc-9a66-ccd72afdc0b3">📦 Cascade Types:</h3><table class="simple-table" id="236b255d-72ff-801f-ad2c-f5cc84062bc5">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-801f-972a-d373330d73a8">
+<th class="simple-table-header-color simple-table-header" id="Wuj@">Type</th>
+<th class="simple-table-header-color simple-table-header" id="qf:[">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-8007-8041-d4e8a7cab95e">
+<td class="" id="Wuj@"><code>PERSIST</code></td>
+<td class="" id="qf:[">Saving parent also saves all children</td>
+</tr>
+<tr id="236b255d-72ff-80e4-9639-d23f2ff26b68">
+<td class="" id="Wuj@"><code>MERGE</code></td>
+<td class="" id="qf:[">Updating parent updates children</td>
+</tr>
+<tr id="236b255d-72ff-809d-8530-d95678725e32">
+<td class="" id="Wuj@"><code>REMOVE</code></td>
+<td class="" id="qf:[">Deleting parent deletes children</td>
+</tr>
+<tr id="236b255d-72ff-804a-8032-e9d1d32e96ab">
+<td class="" id="Wuj@"><code>ALL</code></td>
+<td class="" id="qf:[">Includes all above</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-8039-8639-d17b19f6dcd5"/><h3 class="" id="236b255d-72ff-8075-b02c-e39c8913bfa1">🧹 Orphan Removal:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8025-946f-d1261964c277"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+@JoinColumn(name = "user_id")
+private List&lt;Order&gt; orders;</code></pre><p class="" id="236b255d-72ff-80d7-b9b1-d72ab2b4a2c0">🔹 If you remove an <code>Order</code>
+							from <code>user.getOrders()</code>, it will be deleted from the DB too.</p><hr id="236b255d-72ff-80de-b655-f9b8903180e9"/><h2 class="" id="236b255d-72ff-8031-bbc3-d039c983e14e">🔶 2. @OneToMany (Bidirectional)</h2><h3 class="" id="236b255d-72ff-8007-aef2-e5908426e8e6">✅ Features:</h3><ul class="bulleted-list" id="236b255d-72ff-80c7-8247-e66ecf144ead">
+<li style="list-style-type:disc"><code>User</code> holds <code>List&lt;Order&gt;</code></li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80cd-b80d-feaeac502ca2">
+<li style="list-style-type:disc"><code>Order</code> holds a reference to <code>User</code>
+</li>
+</ul><h3 class="" id="236b255d-72ff-8030-afd3-ff6839408ce2">✅ Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8038-ba18-f8134ffa7520"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Entity
+public class User {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List&lt;Order&gt; orders = new ArrayList&lt;&gt;();
+}
+
+@Entity
+public class Order {
+    @Id @GeneratedValue
+    private Long id;
+    private String item;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+}</code></pre><p class="" id="236b255d-72ff-801e-88dc-edcf7fdd9a0e">📝
+							<code>mappedBy = "user"</code> tells JPA: Order table holds the FK.</p><hr id="236b255d-72ff-803a-a659-d606620b7a19"/><h2 class="" id="236b255d-72ff-8031-b4d5-c2e609938480">🔶 3. @ManyToOne (Unidirectional)</h2><h3 class="" id="236b255d-72ff-8063-9ce7-ed257992df91">✅ Features:</h3><ul class="bulleted-list" id="236b255d-72ff-8088-ac11-c485f72d8fd5">
+<li style="list-style-type:disc">Only child holds reference to parent.</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80ec-b505-e4a34bf5ce9a">
+<li style="list-style-type:disc">Common for Order → User.</li>
+</ul><h3 class="" id="236b255d-72ff-8084-9c91-d3c18452df71">✅ Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80b7-9114-cb2e1f2339ff"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Entity
+public class Order {
+    @Id @GeneratedValue
+    private Long id;
+    private String item;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+}</code></pre><hr id="236b255d-72ff-8045-8bc6-c1dead4c52cc"/><h2 class="" id="236b255d-72ff-80eb-96ad-d533e9fa2d3b">🔶 4. @ManyToOne (Bidirectional)</h2><ul class="bulleted-list" id="236b255d-72ff-8023-b9e6-cf289a178447">
+<li style="list-style-type:disc">Same as <code>@OneToMany</code> bidirectional from the
+								other side.</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80c6-bef4-cc102c49eb8f">
+<li style="list-style-type:disc">Just add <code>@OneToMany(mappedBy="user")</code>
+								in <code>User</code>.</li>
+</ul><hr id="236b255d-72ff-80a4-bd52-e5942772df35"/><h2 class="" id="236b255d-72ff-8091-9a4b-c8e6571043bf">🔶 5. @ManyToMany (Unidirectional)</h2><h3 class="" id="236b255d-72ff-8063-b053-e89ad8470ef7">✅ Features:</h3><ul class="bulleted-list" id="236b255d-72ff-80b4-8c71-c2ed8ddf3396">
+<li style="list-style-type:disc">Each entity holds reference to the other.</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80f6-95ad-ce26af00f565">
+<li style="list-style-type:disc">Creates a new <strong>join table</strong>.</li>
+</ul><h3 class="" id="236b255d-72ff-8042-8064-e4e692c6a010">✅ Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8003-8b11-ed4c1a877de4"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Entity
+public class Product {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+}
+
+@Entity
+public class Order {
+    @Id @GeneratedValue
+    private Long id;
+    private String customer;
+
+    @ManyToMany
+    private List&lt;Product&gt; products = new ArrayList&lt;&gt;();
+}</code></pre><p class="" id="236b255d-72ff-809f-bdda-f76af1c6422f">🔹 Creates:
+							<code>order_products(order_id, product_id)</code></p><hr id="236b255d-72ff-802c-b541-d7adb005845a"/><h2 class="" id="236b255d-72ff-803d-8187-edba161d04a5">🔶 6. @ManyToMany (Bidirectional)</h2><h3 class="" id="236b255d-72ff-8028-af44-ef5eda1cea36">✅ Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80e5-b9c8-e7f9003d4a64"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Entity
+public class Product {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+
+    @ManyToMany(mappedBy = "products")
+    private List&lt;Order&gt; orders = new ArrayList&lt;&gt;();
+}
+
+@Entity
+public class Order {
+    @Id @GeneratedValue
+    private Long id;
+    private String customer;
+
+    @ManyToMany
+    @JoinTable(
+        name = "order_products",
+        joinColumns = @JoinColumn(name = "order_id"),
+        inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List&lt;Product&gt; products = new ArrayList&lt;&gt;();
+}</code></pre><hr id="236b255d-72ff-80ed-a413-d2e086625a7d"/><h2 class="" id="236b255d-72ff-80bc-8450-f03c9a71d677">🔶 7. EAGER vs LAZY Loading</h2><table class="simple-table" id="236b255d-72ff-80a9-88d3-f0e7c853cf1f">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-808f-bc77-efeee5ea9da0">
+<th class="simple-table-header-color simple-table-header" id="Jqe}">Annotation</th>
+<th class="simple-table-header-color simple-table-header" id="fWwD">Default Fetch
+										Type</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80fa-b980-e54e4eaee6ec">
+<td class="" id="Jqe}">@OneToMany</td>
+<td class="" id="fWwD">LAZY</td>
+</tr>
+<tr id="236b255d-72ff-8024-8100-ed9c3f42317f">
+<td class="" id="Jqe}">@ManyToOne</td>
+<td class="" id="fWwD">EAGER</td>
+</tr>
+<tr id="236b255d-72ff-80a5-9325-f4c5e68e690b">
+<td class="" id="Jqe}">@ManyToMany</td>
+<td class="" id="fWwD">LAZY</td>
+</tr>
+</tbody>
+</table><blockquote class="" id="236b255d-72ff-80c5-8729-e8048ed3b4f5">⚠️ LAZY can cause
+							LazyInitializationException outside of transaction. Fix using DTO or join fetch queries.
+						</blockquote><hr id="236b255d-72ff-8069-8f9c-d24b6b056802"/><h2 class="" id="236b255d-72ff-809a-875d-d619e3e18d60">🔶 8. Summary Table</h2><table class="simple-table" id="236b255d-72ff-8098-9d60-d8b9d3f7e616">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-800a-b763-cd4326be1e01">
+<th class="simple-table-header-color simple-table-header" id="t=Qk">Mapping</th>
+<th class="simple-table-header-color simple-table-header" id="cm&lt;k">Direction
+									</th>
+<th class="simple-table-header-color simple-table-header" id="G&gt;Mu">FK Stored In
+									</th>
+<th class="simple-table-header-color simple-table-header" id="J^Es">New Table</th>
+<th class="simple-table-header-color simple-table-header" id="Ev\y">Use Case Example
+									</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-808c-b5dd-d4bfca3e5296">
+<td class="" id="t=Qk">OneToMany</td>
+<td class="" id="cm&lt;k">Unidirectional</td>
+<td class="" id="G&gt;Mu">Join Table</td>
+<td class="" id="J^Es">Yes</td>
+<td class="" id="Ev\y">User → Orders</td>
+</tr>
+<tr id="236b255d-72ff-80c5-b417-e85d52cdd80d">
+<td class="" id="t=Qk">OneToMany</td>
+<td class="" id="cm&lt;k">With FK</td>
+<td class="" id="G&gt;Mu">Child Table</td>
+<td class="" id="J^Es">No</td>
+<td class="" id="Ev\y">User → Orders with FK</td>
+</tr>
+<tr id="236b255d-72ff-80c8-80bd-dcc4228ed4fd">
+<td class="" id="t=Qk">OneToMany</td>
+<td class="" id="cm&lt;k">Bidirectional</td>
+<td class="" id="G&gt;Mu">Child Table</td>
+<td class="" id="J^Es">No</td>
+<td class="" id="Ev\y">User ↔ Orders</td>
+</tr>
+<tr id="236b255d-72ff-809e-b1aa-e9ff81f38802">
+<td class="" id="t=Qk">ManyToOne</td>
+<td class="" id="cm&lt;k">Unidirectional</td>
+<td class="" id="G&gt;Mu">Child Table</td>
+<td class="" id="J^Es">No</td>
+<td class="" id="Ev\y">Order → User</td>
+</tr>
+<tr id="236b255d-72ff-80ec-8876-d070ac9e5061">
+<td class="" id="t=Qk">ManyToMany</td>
+<td class="" id="cm&lt;k">Unidirectional</td>
+<td class="" id="G&gt;Mu">Join Table</td>
+<td class="" id="J^Es">Yes</td>
+<td class="" id="Ev\y">Order → Products</td>
+</tr>
+<tr id="236b255d-72ff-8031-9812-d208005d9aa3">
+<td class="" id="t=Qk">ManyToMany</td>
+<td class="" id="cm&lt;k">Bidirectional</td>
+<td class="" id="G&gt;Mu">Join Table</td>
+<td class="" id="J^Es">Yes</td>
+<td class="" id="Ev\y">Order ↔ Products</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-80de-8e88-c92e57500c30"/><h2 class="" id="236b255d-72ff-807c-983b-ce06b395b1c0">🔶 9. Common Interview Questions</h2><h3 class="" id="236b255d-72ff-8034-8c83-ccc67d194751">💬 How does <code>@OneToMany</code> work
+							by default?</h3><blockquote class="" id="236b255d-72ff-80e7-9ebc-fa25343a3630">It creates a new join table,
+							unless overridden with @JoinColumn.</blockquote><h3 class="" id="236b255d-72ff-80b3-8945-e10f38a93565">💬 When should I use
+							<code>orphanRemoval = true</code>?</h3><blockquote class="" id="236b255d-72ff-80d2-b461-ea560754f59f">When you want children deleted
+							from the DB as soon as they are removed from the collection.</blockquote><h3 class="" id="236b255d-72ff-80bf-91a9-c03f673b0ca1">💬 What’s the difference between
+							<code>CascadeType.REMOVE</code> and <code>orphanRemoval</code>?</h3><blockquote class="" id="236b255d-72ff-802b-a147-db1cae85937d">CascadeType.REMOVE deletes
+							children when parent is deleted.<p class="" id="236b255d-72ff-802e-a15b-f7b598e55142">
+<code>orphanRemoval = true</code> deletes children when removed from the collection
+								(even without deleting parent).</p>
+</blockquote><h3 class="" id="236b255d-72ff-80e4-90da-c219262c04a5">💬 Can you have a unidirectional
+							<code>@OneToMany</code> without a join table?</h3><blockquote class="" id="236b255d-72ff-8074-844d-fb61d43bb689">Yes, by placing the FK in the
+							child using @JoinColumn.</blockquote><h3 class="" id="236b255d-72ff-8097-b6e2-d513a5702c99">💬 What's the default fetch type for
+							<code>@ManyToOne</code>?</h3><blockquote class="" id="236b255d-72ff-80c5-9fc0-c1cbb5f6d34b">EAGER.</blockquote></body></html>

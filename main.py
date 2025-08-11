@@ -14,6 +14,11 @@ os.makedirs(output_dir, exist_ok=True)
 with open(html_file, "r", encoding="utf-8") as f:
     soup = BeautifulSoup(f, "html.parser")
 
+# === UPDATE BODY STYLE IN MAIN INDEX ===
+for style_tag in soup.find_all("style"):
+    if "white-space: pre-wrap;" in style_tag.text:
+        style_tag.string = style_tag.text.replace("white-space: pre-wrap;", "white-space: nowrap;")
+
 # === PROCESS EACH TOPIC ===
 topic_counter = 1
 for details in soup.find_all("details"):
@@ -21,7 +26,7 @@ for details in soup.find_all("details"):
     if not summary_tag:
         continue
 
-    # Clean topic title to remove newlines/tabs and collapse spaces
+    # Clean topic title
     raw_title = summary_tag.get_text(" ", strip=True)
     topic_title = re.sub(r"\s+", " ", raw_title)
     safe_folder_name = "".join(c for c in topic_title if c.isalnum() or c in " _-").strip()
@@ -31,13 +36,13 @@ for details in soup.find_all("details"):
     # Copy CSS/head from main page
     head_html = soup.head.decode()
 
-    # Create new HTML page with original styling
+    # Create topic HTML with same CSS
     topic_soup = BeautifulSoup(f"<html>{head_html}<body></body></html>", "html.parser")
     topic_body = topic_soup.body
     topic_body.append(topic_soup.new_tag("h1"))
     topic_body.h1.string = topic_title
 
-    # Move images & update src (relative path from /topics/)
+    # Process images
     for img in details.find_all("img"):
         src = img.get("src")
         if not src:
@@ -47,21 +52,25 @@ for details in soup.find_all("details"):
         if os.path.exists(img_path):
             dest_path = os.path.join(topic_folder, os.path.basename(decoded_src))
             shutil.move(img_path, dest_path)
-            img['src'] = os.path.join("..", safe_folder_name, os.path.basename(decoded_src))
+            new_src = os.path.join("..", safe_folder_name, os.path.basename(decoded_src))
 
-    # Add the details content (without summary) to topic page
+            # Replace figure with plain img tag (no href, no style)
+            new_img_tag = topic_soup.new_tag("img", src=new_src)
+            img.parent.replace_with(new_img_tag)
+
+    # Add remaining content without summary
     for child in details.find_all(recursive=False):
         if child.name != "summary":
             topic_body.append(child)
 
-    # Save topic page
+    # Save topic HTML
     topic_filename = f"topic_{topic_counter}.html"
     topic_filepath = os.path.join(output_dir, topic_filename)
     with open(topic_filepath, "w", encoding="utf-8") as tf:
         tf.write(str(topic_soup))
     topic_counter += 1
 
-    # Replace <details> in main index with link (no extra spaces)
+    # Replace <details> with link in index
     link_tag = soup.new_tag("a", href=os.path.join("topics", topic_filename))
     link_tag.string = topic_title
     details.replace_with(link_tag)
@@ -70,4 +79,4 @@ for details in soup.find_all("details"):
 with open(html_file, "w", encoding="utf-8") as f:
     f.write(str(soup))
 
-print("✅ Done. Pages created, spaces cleaned, images linked correctly.")
+print("✅ Done. Figure cleaned, index body style updated, pages created.")

@@ -1,0 +1,1063 @@
+<html><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Spring Boot</title>
+<style>
+		/* cspell:disable-file */
+		/* webkit printing magic: print all background colors */
+		html {
+			-webkit-print-color-adjust: exact;
+		}
+
+		* {
+			box-sizing: border-box;
+			-webkit-print-color-adjust: exact;
+		}
+
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		@media only screen {
+			body {
+				margin: 2em auto;
+				max-width: 900px;
+				color: rgb(55, 53, 47);
+			}
+		}
+
+		body {
+			line-height: 1.5;
+			white-space: nowrap;
+		}
+
+		a,
+		a.visited {
+			color: inherit;
+			text-decoration: underline;
+		}
+
+		.pdf-relative-link-path {
+			font-size: 80%;
+			color: #444;
+		}
+
+		h1,
+		h2,
+		h3 {
+			letter-spacing: -0.01em;
+			line-height: 1.2;
+			font-weight: 600;
+			margin-bottom: 0;
+		}
+
+		.page-title {
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin-top: 0;
+			margin-bottom: 0.75em;
+		}
+
+		h1 {
+			font-size: 1.875rem;
+			margin-top: 1.875rem;
+		}
+
+		h2 {
+			font-size: 1.5rem;
+			margin-top: 1.5rem;
+		}
+
+		h3 {
+			font-size: 1.25rem;
+			margin-top: 1.25rem;
+		}
+
+		.source {
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			padding: 1.5em;
+			word-break: break-all;
+		}
+
+		.callout {
+			border-radius: 3px;
+			padding: 1rem;
+		}
+
+		figure {
+			margin: 1.25em 0;
+			page-break-inside: avoid;
+		}
+
+		figcaption {
+			opacity: 0.5;
+			font-size: 85%;
+			margin-top: 0.5em;
+		}
+
+		mark {
+			background-color: transparent;
+		}
+
+		.indented {
+			padding-left: 1.5em;
+		}
+
+		hr {
+			background: transparent;
+			display: block;
+			width: 100%;
+			height: 1px;
+			visibility: visible;
+			border: none;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+		}
+
+		img {
+			max-width: 100%;
+		}
+
+		@media only print {
+			img {
+				max-height: 100vh;
+				object-fit: contain;
+			}
+		}
+
+		@page {
+			margin: 1in;
+		}
+
+		.collection-content {
+			font-size: 0.875rem;
+		}
+
+		.column-list {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.column {
+			padding: 0 1em;
+		}
+
+		.column:first-child {
+			padding-left: 0;
+		}
+
+		.column:last-child {
+			padding-right: 0;
+		}
+
+		.table_of_contents-item {
+			display: block;
+			font-size: 0.875rem;
+			line-height: 1.3;
+			padding: 0.125rem;
+		}
+
+		.table_of_contents-indent-1 {
+			margin-left: 1.5rem;
+		}
+
+		.table_of_contents-indent-2 {
+			margin-left: 3rem;
+		}
+
+		.table_of_contents-indent-3 {
+			margin-left: 4.5rem;
+		}
+
+		.table_of_contents-link {
+			text-decoration: none;
+			opacity: 0.7;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid rgba(55, 53, 47, 0.09);
+			border-collapse: collapse;
+		}
+
+		table {
+			border-left: none;
+			border-right: none;
+		}
+
+		th,
+		td {
+			font-weight: normal;
+			padding: 0.25em 0.5em;
+			line-height: 1.5;
+			min-height: 1.5em;
+			text-align: left;
+		}
+
+		th {
+			color: rgba(55, 53, 47, 0.6);
+		}
+
+		ol,
+		ul {
+			margin: 0;
+			margin-block-start: 0.6em;
+			margin-block-end: 0.6em;
+		}
+
+		li>ol:first-child,
+		li>ul:first-child {
+			margin-block-start: 0.6em;
+		}
+
+		ul>li {
+			list-style: disc;
+		}
+
+		ul.to-do-list {
+			padding-inline-start: 0;
+		}
+
+		ul.to-do-list>li {
+			list-style: none;
+		}
+
+		.to-do-children-checked {
+			text-decoration: line-through;
+			opacity: 0.375;
+		}
+
+		ul.toggle>li {
+			list-style: none;
+		}
+
+		ul {
+			padding-inline-start: 1.7em;
+		}
+
+		ul>li {
+			padding-left: 0.1em;
+		}
+
+		ol {
+			padding-inline-start: 1.6em;
+		}
+
+		ol>li {
+			padding-left: 0.2em;
+		}
+
+		.mono ol {
+			padding-inline-start: 2em;
+		}
+
+		.mono ol>li {
+			text-indent: -0.4em;
+		}
+
+		.toggle {
+			padding-inline-start: 0em;
+			list-style-type: none;
+		}
+
+		/* Indent toggle children */
+		.toggle>li>details {
+			padding-left: 1.7em;
+		}
+
+		.toggle>li>details>summary {
+			margin-left: -1.1em;
+		}
+
+		.selected-value {
+			display: inline-block;
+			padding: 0 0.5em;
+			background: rgba(206, 205, 202, 0.5);
+			border-radius: 3px;
+			margin-right: 0.5em;
+			margin-top: 0.3em;
+			margin-bottom: 0.3em;
+			white-space: nowrap;
+		}
+
+		.collection-title {
+			display: inline-block;
+			margin-right: 1em;
+		}
+
+		.page-description {
+			margin-bottom: 2em;
+		}
+
+		.simple-table {
+			margin-top: 1em;
+			font-size: 0.875rem;
+			empty-cells: show;
+		}
+
+		.simple-table td {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table th {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table-header-color {
+			background: rgb(247, 246, 243);
+			color: black;
+		}
+
+		.simple-table-header {
+			font-weight: 500;
+		}
+
+		time {
+			opacity: 0.5;
+		}
+
+		.icon {
+			display: inline-block;
+			max-width: 1.2em;
+			max-height: 1.2em;
+			text-decoration: none;
+			vertical-align: text-bottom;
+			margin-right: 0.5em;
+		}
+
+		img.icon {
+			border-radius: 3px;
+		}
+
+		.user-icon {
+			width: 1.5em;
+			height: 1.5em;
+			border-radius: 100%;
+			margin-right: 0.5rem;
+		}
+
+		.user-icon-inner {
+			font-size: 0.8em;
+		}
+
+		.text-icon {
+			border: 1px solid #000;
+			text-align: center;
+		}
+
+		.page-cover-image {
+			display: block;
+			object-fit: cover;
+			width: 100%;
+			max-height: 30vh;
+		}
+
+		.page-header-icon {
+			font-size: 3rem;
+			margin-bottom: 1rem;
+		}
+
+		.page-header-icon-with-cover {
+			margin-top: -0.72em;
+			margin-left: 0.07em;
+		}
+
+		.page-header-icon img {
+			border-radius: 3px;
+		}
+
+		.link-to-page {
+			margin: 1em 0;
+			padding: 0;
+			border: none;
+			font-weight: 500;
+		}
+
+		p>.user {
+			opacity: 0.5;
+		}
+
+		td>.user,
+		td>time {
+			white-space: nowrap;
+		}
+
+		input[type="checkbox"] {
+			transform: scale(1.5);
+			margin-right: 0.6em;
+			vertical-align: middle;
+		}
+
+		p {
+			margin-top: 0.5em;
+			margin-bottom: 0.5em;
+		}
+
+		.image {
+			border: none;
+			margin: 1.5em 0;
+			padding: 0;
+			border-radius: 0;
+			text-align: center;
+		}
+
+		.code,
+		code {
+			background: rgba(135, 131, 120, 0.15);
+			border-radius: 3px;
+			padding: 0.2em 0.4em;
+			border-radius: 3px;
+			font-size: 85%;
+			tab-size: 2;
+		}
+
+		code {
+			color: #eb5757;
+		}
+
+		.code {
+			padding: 1.5em 1em;
+		}
+
+		.code-wrap {
+			white-space: nowrap;
+			word-break: break-all;
+		}
+
+		.code>code {
+			background: none;
+			padding: 0;
+			font-size: 100%;
+			color: inherit;
+		}
+
+		blockquote {
+			font-size: 1.25em;
+			margin: 1em 0;
+			padding-left: 1em;
+			border-left: 3px solid rgb(55, 53, 47);
+		}
+
+		.bookmark {
+			text-decoration: none;
+			max-height: 8em;
+			padding: 0;
+			display: flex;
+			width: 100%;
+			align-items: stretch;
+		}
+
+		.bookmark-title {
+			font-size: 0.85em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: 1.75em;
+			white-space: nowrap;
+		}
+
+		.bookmark-text {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.bookmark-info {
+			flex: 4 1 180px;
+			padding: 12px 14px 14px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.bookmark-image {
+			width: 33%;
+			flex: 1 1 180px;
+			display: block;
+			position: relative;
+			object-fit: cover;
+			border-radius: 1px;
+		}
+
+		.bookmark-description {
+			color: rgba(55, 53, 47, 0.6);
+			font-size: 0.75em;
+			overflow: hidden;
+			max-height: 4.5em;
+			word-break: break-word;
+		}
+
+		.bookmark-href {
+			font-size: 0.75em;
+			margin-top: 0.25em;
+		}
+
+		.sans {
+			font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+		}
+
+		.code {
+			font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+		}
+
+		.serif {
+			font-family: Lyon-Text, Georgia, ui-serif, serif;
+		}
+
+		.mono {
+			font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+		}
+
+		.pdf .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR';
+		}
+
+		.pdf .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.pdf .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR';
+		}
+
+		.pdf .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.highlight-default {
+			color: rgba(50, 48, 44, 1);
+		}
+
+		.highlight-gray {
+			color: rgba(115, 114, 110, 1);
+			fill: rgba(115, 114, 110, 1);
+		}
+
+		.highlight-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.highlight-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.highlight-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.highlight-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.highlight-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.highlight-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.highlight-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.highlight-red {
+			color: rgba(205, 60, 58, 1);
+			fill: rgba(205, 60, 58, 1);
+		}
+
+		.highlight-default_background {
+			color: rgba(50, 48, 44, 1);
+		}
+
+		.highlight-gray_background {
+			background: rgba(248, 248, 247, 1);
+		}
+
+		.highlight-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.highlight-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.highlight-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.highlight-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.highlight-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.highlight-purple_background {
+			background: rgba(248, 243, 252, 1);
+		}
+
+		.highlight-pink_background {
+			background: rgba(252, 241, 246, 1);
+		}
+
+		.highlight-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.block-color-default {
+			color: inherit;
+			fill: inherit;
+		}
+
+		.block-color-gray {
+			color: rgba(115, 114, 110, 1);
+			fill: rgba(115, 114, 110, 1);
+		}
+
+		.block-color-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.block-color-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.block-color-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.block-color-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.block-color-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.block-color-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.block-color-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.block-color-red {
+			color: rgba(205, 60, 58, 1);
+			fill: rgba(205, 60, 58, 1);
+		}
+
+		.block-color-default_background {
+			color: inherit;
+			fill: inherit;
+		}
+
+		.block-color-gray_background {
+			background: rgba(248, 248, 247, 1);
+		}
+
+		.block-color-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.block-color-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.block-color-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.block-color-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.block-color-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.block-color-purple_background {
+			background: rgba(248, 243, 252, 1);
+		}
+
+		.block-color-pink_background {
+			background: rgba(252, 241, 246, 1);
+		}
+
+		.block-color-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.select-value-color-default {
+			background-color: rgba(84, 72, 49, 0.08);
+		}
+
+		.select-value-color-gray {
+			background-color: rgba(84, 72, 49, 0.15);
+		}
+
+		.select-value-color-brown {
+			background-color: rgba(210, 162, 141, 0.35);
+		}
+
+		.select-value-color-orange {
+			background-color: rgba(224, 124, 57, 0.27);
+		}
+
+		.select-value-color-yellow {
+			background-color: rgba(236, 191, 66, 0.39);
+		}
+
+		.select-value-color-green {
+			background-color: rgba(123, 183, 129, 0.27);
+		}
+
+		.select-value-color-blue {
+			background-color: rgba(93, 165, 206, 0.27);
+		}
+
+		.select-value-color-purple {
+			background-color: rgba(168, 129, 197, 0.27);
+		}
+
+		.select-value-color-pink {
+			background-color: rgba(225, 136, 179, 0.27);
+		}
+
+		.select-value-color-red {
+			background-color: rgba(244, 171, 159, 0.4);
+		}
+
+		.checkbox {
+			display: inline-flex;
+			vertical-align: text-bottom;
+			width: 16;
+			height: 16;
+			background-size: 16px;
+			margin-left: 2px;
+			margin-right: 5px;
+		}
+
+		.checkbox-on {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+
+		.checkbox-off {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+	</style>
+</head><body><h1>Rest template (Microservice)</h1><h1 class="" id="236b255d-72ff-8025-98d0-c6f2432862f8">🚀 Spring Boot Microservices
+							Communication: <code>OrderService ↔ ProductService</code></h1><hr id="236b255d-72ff-807c-9820-ee9d598b4e69"/><h2 class="" id="236b255d-72ff-8005-8fbe-f1e74e53b32d">✅ 1. Microservice Setup</h2><table class="simple-table" id="236b255d-72ff-8058-8461-e2f182004150">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8019-bc8c-c53608e09c82">
+<th class="simple-table-header-color simple-table-header" id="KE;:">Service</th>
+<th class="simple-table-header-color simple-table-header" id="YWSG">Port</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80e8-b0c0-fbc8053a5071">
+<td class="" id="KE;:"><code>OrderService</code></td>
+<td class="" id="YWSG"><code>8081</code></td>
+</tr>
+<tr id="236b255d-72ff-8087-baeb-cf5f90b69d51">
+<td class="" id="KE;:"><code>ProductService</code></td>
+<td class="" id="YWSG"><code>8082</code></td>
+</tr>
+</tbody>
+</table><p class="" id="236b255d-72ff-8044-bd7e-c8859848cff0">Each service is a standalone Spring Boot
+							app with its own responsibilities and endpoints.</p><hr id="236b255d-72ff-8048-995a-d5fb00c48b90"/><h2 class="" id="236b255d-72ff-80fc-a904-e715817888cb">🔁 2. Inter-Service Communication</h2><h3 class="" id="236b255d-72ff-8073-8bb8-cd0226e63164">🔄 Communication Types:</h3><ul class="bulleted-list" id="236b255d-72ff-805e-9c00-ef0669565367">
+<li style="list-style-type:disc"><strong>Synchronous</strong>: Waits for response (blocking)
+							</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-8006-b9dc-ce98efe9f048">
+<li style="list-style-type:disc"><strong>Asynchronous</strong>: Doesn’t wait (non-blocking;
+								e.g., Kafka/RabbitMQ)</li>
+</ul><blockquote class="" id="236b255d-72ff-808f-ad31-f5b55acf4974">🧠 This guide focuses on
+							Synchronous Communication</blockquote><hr id="236b255d-72ff-807b-9301-d8bd74898cb6"/><h2 class="" id="236b255d-72ff-808d-8e35-fe67f8485452">🔌 3. Synchronous Communication Options
+							in Spring Boot</h2><table class="simple-table" id="236b255d-72ff-803b-be47-de7b91a619bf">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8057-9c93-c565e3305404">
+<th class="simple-table-header-color simple-table-header" id="_Jw\">Method</th>
+<th class="simple-table-header-color simple-table-header" id="e`~m">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80fd-a566-f68330157e35">
+<td class="" id="_Jw\"><code>RestTemplate</code></td>
+<td class="" id="e`~m">Legacy, still widely used</td>
+</tr>
+<tr id="236b255d-72ff-806f-937c-c7ba240e5cf8">
+<td class="" id="_Jw\"><code>RestClient</code></td>
+<td class="" id="e`~m">New (Spring 6), more concise</td>
+</tr>
+<tr id="236b255d-72ff-80b8-88e0-da172908bd03">
+<td class="" id="_Jw\"><code>FeignClient</code></td>
+<td class="" id="e`~m">Declarative HTTP client with built-in load balancing (Spring
+										Cloud)</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-8035-bc56-e2b0d1b9d576"/><h2 class="" id="236b255d-72ff-8058-a50c-dc0948cb1353">🧰 4. Using RestTemplate (Legacy, but
+							Interview Favorite)</h2><h3 class="" id="236b255d-72ff-807d-8df0-f6945681fe4b">Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80ba-bece-d53be5ec42fc"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">RestTemplate restTemplate = new RestTemplate();
+
+String url = "http://localhost:8082/products/1";
+
+Product product = restTemplate.getForObject(url, Product.class);</code></pre><h3 class="" id="236b255d-72ff-80fb-ad8b-cd5fb561847f">Internals of <code>getForObject()</code>:
+						</h3><ul class="bulleted-list" id="236b255d-72ff-80a4-ac2a-e1f73f3d9351">
+<li style="list-style-type:disc">Uses <code>HttpURLConnection</code> under the hood via
+								<code>SimpleClientHttpRequestFactory</code></li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80fa-97bd-c3e0def6fe49">
+<li style="list-style-type:disc">Performs a <strong>3-way TCP handshake</strong></li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80a0-b5d6-ce748ef75cce">
+<li style="list-style-type:disc">Sends the request</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80cd-8273-f10db1644d1d">
+<li style="list-style-type:disc">Waits for response</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-8005-a5f0-dc205d625709">
+<li style="list-style-type:disc">Uses <strong>Keep-Alive cache</strong> to reuse TCP
+								connections</li>
+</ul><hr id="236b255d-72ff-80f2-a6cf-f7ed811d3a5d"/><h2 class="" id="236b255d-72ff-8096-8985-df07b8104222">🌐 5. HTTP Fundamentals Refresher</h2><h3 class="" id="236b255d-72ff-80a6-8a45-c9eaaed3ec8c">Sample GET Request:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80e3-8d19-dfb341b6166d"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">GET /orders/1 HTTP/1.1
+Host: localhost:8081
+User-Agent: curl
+Accept: application/json</code></pre><h3 class="" id="236b255d-72ff-80cf-a921-cd89603fd0e9">Sample POST Request:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8068-9188-e17b54087e89"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">POST /products HTTP/1.1
+Host: localhost:8082
+Content-Type: application/json
+Content-Length: 65
+
+{
+  "name": "Ice-Cream",
+  "price": 200
+}</code></pre><hr id="236b255d-72ff-80e3-a353-d321113ba5cb"/><h2 class="" id="236b255d-72ff-8006-b91f-c0aca4837cc2">🔍 6. What is Keep-Alive?</h2><ul class="bulleted-list" id="236b255d-72ff-8036-9974-c74421e5cae4">
+<li style="list-style-type:disc">Default in HTTP/1.1</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80dd-85b8-f986648b6414">
+<li style="list-style-type:disc">Reuses TCP connection for multiple HTTP requests</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-8077-b5c4-dc752ca0f03c">
+<li style="list-style-type:disc">Controlled by headers:
+								<script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/>
+<pre class="code code-wrap" id="236b255d-72ff-80fb-a6a0-c0e4a93b9a95"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Connection: keep-alive
+Keep-Alive: timeout=5, max=50</code></pre>
+</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80ff-b4c8-f6d4587de623">
+<li style="list-style-type:disc">Saves time from repeated handshakes</li>
+</ul><hr id="236b255d-72ff-806d-b851-f2ded306bfe9"/><h2 class="" id="236b255d-72ff-8062-b2c2-d81d7d11f37d">⚙️ 7. Methods in RestTemplate</h2><table class="simple-table" id="236b255d-72ff-8072-ab7d-fd1b5fb173f2">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8048-8324-e753304284e8">
+<th class="simple-table-header-color simple-table-header" id="pX^P">Method</th>
+<th class="simple-table-header-color simple-table-header" id="@=?~">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-807d-9754-c739f41d261f">
+<td class="" id="pX^P"><code>getForObject()</code></td>
+<td class="" id="@=?~">Get only body</td>
+</tr>
+<tr id="236b255d-72ff-8061-b4b1-ded17b4fa54d">
+<td class="" id="pX^P"><code>getForEntity()</code></td>
+<td class="" id="@=?~">Get full response (headers + status + body)</td>
+</tr>
+<tr id="236b255d-72ff-803b-9d99-c943eff7e990">
+<td class="" id="pX^P"><code>postForObject()</code></td>
+<td class="" id="@=?~">POST + body</td>
+</tr>
+<tr id="236b255d-72ff-807e-8ff7-c08d50083587">
+<td class="" id="pX^P"><code>postForEntity()</code></td>
+<td class="" id="@=?~">POST + full response</td>
+</tr>
+<tr id="236b255d-72ff-8096-989a-c21000f17adf">
+<td class="" id="pX^P"><code>put()</code></td>
+<td class="" id="@=?~">Sends PUT request (no return)</td>
+</tr>
+<tr id="236b255d-72ff-80e7-b047-cfac60c529b0">
+<td class="" id="pX^P"><code>delete()</code></td>
+<td class="" id="@=?~">Sends DELETE request</td>
+</tr>
+<tr id="236b255d-72ff-80ca-8219-f6f657f426ca">
+<td class="" id="pX^P"><code>exchange()</code></td>
+<td class="" id="@=?~">Most flexible – allows headers, body, method</td>
+</tr>
+<tr id="236b255d-72ff-8030-a05f-fb40891e7faa">
+<td class="" id="pX^P"><code>execute()</code></td>
+<td class="" id="@=?~">Full manual control using callback interfaces</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-80dc-bc6a-e4e4d6b421bd"/><h3 class="" id="236b255d-72ff-8097-9ef7-c9a1a27a0eb4">🧪 <code>exchange()</code> Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80cc-a242-ed7d44ed983c"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">HttpHeaders headers = new HttpHeaders();
+headers.set("Authorization", "Bearer abc123");
+
+Product product = new Product("Ice-cream", 100);
+HttpEntity&lt;Product&gt; requestEntity = new HttpEntity&lt;&gt;(product, headers);
+
+ResponseEntity&lt;Product&gt; response = restTemplate.exchange(
+    "http://localhost:8082/products",
+    HttpMethod.POST,
+    requestEntity,
+    Product.class
+);</code></pre><hr id="236b255d-72ff-8063-9a3a-c04fa6e189e0"/><h2 class="" id="236b255d-72ff-8006-90cd-fe60b595e869">🛠️ 8. Advanced: Manual
+							<code>execute()</code> with Custom Callbacks</h2><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80c7-b2ea-e81024f87fed"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">RequestCallback requestCallback = request -&gt; {
+    request.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+    byte[] body = new ObjectMapper().writeValueAsBytes(new Product("Ice-cream", 100));
+    StreamUtils.copy(body, request.getBody());
+};
+
+ResponseExtractor&lt;String&gt; responseExtractor = response -&gt;
+    StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8);
+
+String response = restTemplate.execute(
+    "http://localhost:8082/products",
+    HttpMethod.POST,
+    requestCallback,
+    responseExtractor
+);</code></pre><blockquote class="" id="236b255d-72ff-802f-b1cf-d9e87000c03b">✅ Gives full control over
+							headers, serialization, and parsing.</blockquote><hr id="236b255d-72ff-8058-8bef-e8448a1d77fd"/><h2 class="" id="236b255d-72ff-8066-9777-db066ce5ccd0">🛑 9. Limitations of RestTemplate</h2><table class="simple-table" id="236b255d-72ff-8098-8a1d-ea1ac75287c8">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8034-9a94-e5bdd56249fb">
+<th class="simple-table-header-color simple-table-header" id="{OLT">Issue</th>
+<th class="simple-table-header-color simple-table-header" id="E~XY">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80d5-863e-c8417489182a">
+<td class="" id="{OLT">🧱 Boilerplate-heavy</td>
+<td class="" id="E~XY">Too many overloaded methods</td>
+</tr>
+<tr id="236b255d-72ff-8063-aeb8-e16ea056e530">
+<td class="" id="{OLT">❌ No built-in retries</td>
+<td class="" id="E~XY">Retry/CircuitBreaker not built-in</td>
+</tr>
+<tr id="236b255d-72ff-8021-9e6c-d7295df91d1f">
+<td class="" id="{OLT">⚠️ Low readability</td>
+<td class="" id="E~XY">Verbose and imperative</td>
+</tr>
+<tr id="236b255d-72ff-80a2-b6bf-f7db3df3001c">
+<td class="" id="{OLT">🛑 Maintenance mode</td>
+<td class="" id="E~XY">Deprecated for <code>RestClient</code> in Spring 6+</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-80ec-b469-e3779a55b9ed"/><h2 class="" id="236b255d-72ff-801f-b2dc-f617ccde84c0">🚀 10. Why Move to
+							<code>RestClient</code>?</h2><table class="simple-table" id="236b255d-72ff-8045-a68b-de8b8afbc1cd">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8099-8203-f907fc57c6a6">
+<th class="simple-table-header-color simple-table-header" id="HgXI">Feature</th>
+<th class="simple-table-header-color simple-table-header" id="q@w{">Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-8058-8c9e-fdd8dada7ff6">
+<td class="" id="HgXI">Fluent Builder</td>
+<td class="" id="q@w{">Clean and chainable</td>
+</tr>
+<tr id="236b255d-72ff-8099-9a8f-e98c3860d0a4">
+<td class="" id="HgXI">Built-in Config</td>
+<td class="" id="q@w{">Headers, timeouts, error handlers</td>
+</tr>
+<tr id="236b255d-72ff-80f5-a56e-c7f007f1c304">
+<td class="" id="HgXI">Future-proof</td>
+<td class="" id="q@w{">Supports reactive &amp; interceptors</td>
+</tr>
+</tbody>
+</table><blockquote class="" id="236b255d-72ff-8040-8bc6-da2a92afacf3">✅ Recommended for Spring Boot 3+
+							/ Spring Framework 6+</blockquote><hr id="236b255d-72ff-802f-adad-d52195f193d4"/><h2 class="" id="236b255d-72ff-8039-bdb6-f1e5089eec47">🧠 Interview Key Points</h2><table class="simple-table" id="236b255d-72ff-80e5-969a-c9cd274f6c73">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8042-8764-f88c7284b564">
+<th class="simple-table-header-color simple-table-header" id="]Byf">Question</th>
+<th class="simple-table-header-color simple-table-header" id="PmHj">Must-Know</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80c9-9632-f75876be3bd8">
+<td class="" id="]Byf">How does RestTemplate work internally?</td>
+<td class="" id="PmHj">Uses <code>HttpURLConnection</code>,
+										<code>KeepAliveCache</code>, TCP reuse</td>
+</tr>
+<tr id="236b255d-72ff-8097-afbf-d0a3456b605e">
+<td class="" id="]Byf">When is TCP connection closed?</td>
+<td class="" id="PmHj">If response stream isn’t fully read or
+										<code>Connection: close</code> is sent</td>
+</tr>
+<tr id="236b255d-72ff-80bc-aa7c-cdfedd38a4d8">
+<td class="" id="]Byf">How to reuse TCP?</td>
+<td class="" id="PmHj">Use <code>Connection: keep-alive</code> (default in HTTP/1.1)
+									</td>
+</tr>
+<tr id="236b255d-72ff-804a-97a4-f1427a19de20">
+<td class="" id="]Byf">When to use <code>exchange()</code> vs
+										<code>execute()</code>?</td>
+<td class="" id="PmHj"><code>exchange()</code> is semi-automatic,
+										<code>execute()</code> is fully manual</td>
+</tr>
+<tr id="236b255d-72ff-80c6-bd6a-ff9ab5472c5c">
+<td class="" id="]Byf">What’s better than RestTemplate in modern Spring?</td>
+<td class="" id="PmHj"><code>RestClient</code> or <code>FeignClient</code> with
+										Spring Cloud</td>
+</tr>
+<tr id="236b255d-72ff-80f7-8a62-dcd48e8832fe">
+<td class="" id="]Byf">How to handle headers and body together?</td>
+<td class="" id="PmHj">Use <code>HttpEntity&lt;&gt;</code> in
+										<code>exchange()</code></td>
+</tr>
+</tbody>
+</table></body></html>

@@ -1,0 +1,1010 @@
+<html><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Spring Boot</title>
+<style>
+		/* cspell:disable-file */
+		/* webkit printing magic: print all background colors */
+		html {
+			-webkit-print-color-adjust: exact;
+		}
+
+		* {
+			box-sizing: border-box;
+			-webkit-print-color-adjust: exact;
+		}
+
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		@media only screen {
+			body {
+				margin: 2em auto;
+				max-width: 900px;
+				color: rgb(55, 53, 47);
+			}
+		}
+
+		body {
+			line-height: 1.5;
+			white-space: nowrap;
+		}
+
+		a,
+		a.visited {
+			color: inherit;
+			text-decoration: underline;
+		}
+
+		.pdf-relative-link-path {
+			font-size: 80%;
+			color: #444;
+		}
+
+		h1,
+		h2,
+		h3 {
+			letter-spacing: -0.01em;
+			line-height: 1.2;
+			font-weight: 600;
+			margin-bottom: 0;
+		}
+
+		.page-title {
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin-top: 0;
+			margin-bottom: 0.75em;
+		}
+
+		h1 {
+			font-size: 1.875rem;
+			margin-top: 1.875rem;
+		}
+
+		h2 {
+			font-size: 1.5rem;
+			margin-top: 1.5rem;
+		}
+
+		h3 {
+			font-size: 1.25rem;
+			margin-top: 1.25rem;
+		}
+
+		.source {
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			padding: 1.5em;
+			word-break: break-all;
+		}
+
+		.callout {
+			border-radius: 3px;
+			padding: 1rem;
+		}
+
+		figure {
+			margin: 1.25em 0;
+			page-break-inside: avoid;
+		}
+
+		figcaption {
+			opacity: 0.5;
+			font-size: 85%;
+			margin-top: 0.5em;
+		}
+
+		mark {
+			background-color: transparent;
+		}
+
+		.indented {
+			padding-left: 1.5em;
+		}
+
+		hr {
+			background: transparent;
+			display: block;
+			width: 100%;
+			height: 1px;
+			visibility: visible;
+			border: none;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+		}
+
+		img {
+			max-width: 100%;
+		}
+
+		@media only print {
+			img {
+				max-height: 100vh;
+				object-fit: contain;
+			}
+		}
+
+		@page {
+			margin: 1in;
+		}
+
+		.collection-content {
+			font-size: 0.875rem;
+		}
+
+		.column-list {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.column {
+			padding: 0 1em;
+		}
+
+		.column:first-child {
+			padding-left: 0;
+		}
+
+		.column:last-child {
+			padding-right: 0;
+		}
+
+		.table_of_contents-item {
+			display: block;
+			font-size: 0.875rem;
+			line-height: 1.3;
+			padding: 0.125rem;
+		}
+
+		.table_of_contents-indent-1 {
+			margin-left: 1.5rem;
+		}
+
+		.table_of_contents-indent-2 {
+			margin-left: 3rem;
+		}
+
+		.table_of_contents-indent-3 {
+			margin-left: 4.5rem;
+		}
+
+		.table_of_contents-link {
+			text-decoration: none;
+			opacity: 0.7;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid rgba(55, 53, 47, 0.09);
+			border-collapse: collapse;
+		}
+
+		table {
+			border-left: none;
+			border-right: none;
+		}
+
+		th,
+		td {
+			font-weight: normal;
+			padding: 0.25em 0.5em;
+			line-height: 1.5;
+			min-height: 1.5em;
+			text-align: left;
+		}
+
+		th {
+			color: rgba(55, 53, 47, 0.6);
+		}
+
+		ol,
+		ul {
+			margin: 0;
+			margin-block-start: 0.6em;
+			margin-block-end: 0.6em;
+		}
+
+		li>ol:first-child,
+		li>ul:first-child {
+			margin-block-start: 0.6em;
+		}
+
+		ul>li {
+			list-style: disc;
+		}
+
+		ul.to-do-list {
+			padding-inline-start: 0;
+		}
+
+		ul.to-do-list>li {
+			list-style: none;
+		}
+
+		.to-do-children-checked {
+			text-decoration: line-through;
+			opacity: 0.375;
+		}
+
+		ul.toggle>li {
+			list-style: none;
+		}
+
+		ul {
+			padding-inline-start: 1.7em;
+		}
+
+		ul>li {
+			padding-left: 0.1em;
+		}
+
+		ol {
+			padding-inline-start: 1.6em;
+		}
+
+		ol>li {
+			padding-left: 0.2em;
+		}
+
+		.mono ol {
+			padding-inline-start: 2em;
+		}
+
+		.mono ol>li {
+			text-indent: -0.4em;
+		}
+
+		.toggle {
+			padding-inline-start: 0em;
+			list-style-type: none;
+		}
+
+		/* Indent toggle children */
+		.toggle>li>details {
+			padding-left: 1.7em;
+		}
+
+		.toggle>li>details>summary {
+			margin-left: -1.1em;
+		}
+
+		.selected-value {
+			display: inline-block;
+			padding: 0 0.5em;
+			background: rgba(206, 205, 202, 0.5);
+			border-radius: 3px;
+			margin-right: 0.5em;
+			margin-top: 0.3em;
+			margin-bottom: 0.3em;
+			white-space: nowrap;
+		}
+
+		.collection-title {
+			display: inline-block;
+			margin-right: 1em;
+		}
+
+		.page-description {
+			margin-bottom: 2em;
+		}
+
+		.simple-table {
+			margin-top: 1em;
+			font-size: 0.875rem;
+			empty-cells: show;
+		}
+
+		.simple-table td {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table th {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table-header-color {
+			background: rgb(247, 246, 243);
+			color: black;
+		}
+
+		.simple-table-header {
+			font-weight: 500;
+		}
+
+		time {
+			opacity: 0.5;
+		}
+
+		.icon {
+			display: inline-block;
+			max-width: 1.2em;
+			max-height: 1.2em;
+			text-decoration: none;
+			vertical-align: text-bottom;
+			margin-right: 0.5em;
+		}
+
+		img.icon {
+			border-radius: 3px;
+		}
+
+		.user-icon {
+			width: 1.5em;
+			height: 1.5em;
+			border-radius: 100%;
+			margin-right: 0.5rem;
+		}
+
+		.user-icon-inner {
+			font-size: 0.8em;
+		}
+
+		.text-icon {
+			border: 1px solid #000;
+			text-align: center;
+		}
+
+		.page-cover-image {
+			display: block;
+			object-fit: cover;
+			width: 100%;
+			max-height: 30vh;
+		}
+
+		.page-header-icon {
+			font-size: 3rem;
+			margin-bottom: 1rem;
+		}
+
+		.page-header-icon-with-cover {
+			margin-top: -0.72em;
+			margin-left: 0.07em;
+		}
+
+		.page-header-icon img {
+			border-radius: 3px;
+		}
+
+		.link-to-page {
+			margin: 1em 0;
+			padding: 0;
+			border: none;
+			font-weight: 500;
+		}
+
+		p>.user {
+			opacity: 0.5;
+		}
+
+		td>.user,
+		td>time {
+			white-space: nowrap;
+		}
+
+		input[type="checkbox"] {
+			transform: scale(1.5);
+			margin-right: 0.6em;
+			vertical-align: middle;
+		}
+
+		p {
+			margin-top: 0.5em;
+			margin-bottom: 0.5em;
+		}
+
+		.image {
+			border: none;
+			margin: 1.5em 0;
+			padding: 0;
+			border-radius: 0;
+			text-align: center;
+		}
+
+		.code,
+		code {
+			background: rgba(135, 131, 120, 0.15);
+			border-radius: 3px;
+			padding: 0.2em 0.4em;
+			border-radius: 3px;
+			font-size: 85%;
+			tab-size: 2;
+		}
+
+		code {
+			color: #eb5757;
+		}
+
+		.code {
+			padding: 1.5em 1em;
+		}
+
+		.code-wrap {
+			white-space: nowrap;
+			word-break: break-all;
+		}
+
+		.code>code {
+			background: none;
+			padding: 0;
+			font-size: 100%;
+			color: inherit;
+		}
+
+		blockquote {
+			font-size: 1.25em;
+			margin: 1em 0;
+			padding-left: 1em;
+			border-left: 3px solid rgb(55, 53, 47);
+		}
+
+		.bookmark {
+			text-decoration: none;
+			max-height: 8em;
+			padding: 0;
+			display: flex;
+			width: 100%;
+			align-items: stretch;
+		}
+
+		.bookmark-title {
+			font-size: 0.85em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: 1.75em;
+			white-space: nowrap;
+		}
+
+		.bookmark-text {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.bookmark-info {
+			flex: 4 1 180px;
+			padding: 12px 14px 14px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.bookmark-image {
+			width: 33%;
+			flex: 1 1 180px;
+			display: block;
+			position: relative;
+			object-fit: cover;
+			border-radius: 1px;
+		}
+
+		.bookmark-description {
+			color: rgba(55, 53, 47, 0.6);
+			font-size: 0.75em;
+			overflow: hidden;
+			max-height: 4.5em;
+			word-break: break-word;
+		}
+
+		.bookmark-href {
+			font-size: 0.75em;
+			margin-top: 0.25em;
+		}
+
+		.sans {
+			font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+		}
+
+		.code {
+			font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+		}
+
+		.serif {
+			font-family: Lyon-Text, Georgia, ui-serif, serif;
+		}
+
+		.mono {
+			font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+		}
+
+		.pdf .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR';
+		}
+
+		.pdf .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.pdf .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR';
+		}
+
+		.pdf .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.highlight-default {
+			color: rgba(50, 48, 44, 1);
+		}
+
+		.highlight-gray {
+			color: rgba(115, 114, 110, 1);
+			fill: rgba(115, 114, 110, 1);
+		}
+
+		.highlight-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.highlight-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.highlight-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.highlight-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.highlight-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.highlight-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.highlight-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.highlight-red {
+			color: rgba(205, 60, 58, 1);
+			fill: rgba(205, 60, 58, 1);
+		}
+
+		.highlight-default_background {
+			color: rgba(50, 48, 44, 1);
+		}
+
+		.highlight-gray_background {
+			background: rgba(248, 248, 247, 1);
+		}
+
+		.highlight-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.highlight-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.highlight-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.highlight-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.highlight-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.highlight-purple_background {
+			background: rgba(248, 243, 252, 1);
+		}
+
+		.highlight-pink_background {
+			background: rgba(252, 241, 246, 1);
+		}
+
+		.highlight-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.block-color-default {
+			color: inherit;
+			fill: inherit;
+		}
+
+		.block-color-gray {
+			color: rgba(115, 114, 110, 1);
+			fill: rgba(115, 114, 110, 1);
+		}
+
+		.block-color-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.block-color-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.block-color-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.block-color-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.block-color-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.block-color-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.block-color-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.block-color-red {
+			color: rgba(205, 60, 58, 1);
+			fill: rgba(205, 60, 58, 1);
+		}
+
+		.block-color-default_background {
+			color: inherit;
+			fill: inherit;
+		}
+
+		.block-color-gray_background {
+			background: rgba(248, 248, 247, 1);
+		}
+
+		.block-color-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.block-color-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.block-color-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.block-color-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.block-color-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.block-color-purple_background {
+			background: rgba(248, 243, 252, 1);
+		}
+
+		.block-color-pink_background {
+			background: rgba(252, 241, 246, 1);
+		}
+
+		.block-color-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.select-value-color-default {
+			background-color: rgba(84, 72, 49, 0.08);
+		}
+
+		.select-value-color-gray {
+			background-color: rgba(84, 72, 49, 0.15);
+		}
+
+		.select-value-color-brown {
+			background-color: rgba(210, 162, 141, 0.35);
+		}
+
+		.select-value-color-orange {
+			background-color: rgba(224, 124, 57, 0.27);
+		}
+
+		.select-value-color-yellow {
+			background-color: rgba(236, 191, 66, 0.39);
+		}
+
+		.select-value-color-green {
+			background-color: rgba(123, 183, 129, 0.27);
+		}
+
+		.select-value-color-blue {
+			background-color: rgba(93, 165, 206, 0.27);
+		}
+
+		.select-value-color-purple {
+			background-color: rgba(168, 129, 197, 0.27);
+		}
+
+		.select-value-color-pink {
+			background-color: rgba(225, 136, 179, 0.27);
+		}
+
+		.select-value-color-red {
+			background-color: rgba(244, 171, 159, 0.4);
+		}
+
+		.checkbox {
+			display: inline-flex;
+			vertical-align: text-bottom;
+			width: 16;
+			height: 16;
+			background-size: 16px;
+			margin-left: 2px;
+			margin-right: 5px;
+		}
+
+		.checkbox-on {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+
+		.checkbox-off {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+	</style>
+</head><body><h1>Spring boot JPA(Part 8)</h1><h2 class="" id="236b255d-72ff-808b-892b-ebe24c51d3ef">🔶 1. 📌 Derived Query (Method Name
+							Query)</h2><h3 class="" id="236b255d-72ff-80d1-8013-c8c23e34b66b">✅ What is it?</h3><ul class="bulleted-list" id="236b255d-72ff-8003-8688-f64e256e325d">
+<li style="list-style-type:disc">Spring Data JPA auto-generates SQL based on <strong>method
+									names</strong>.</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-802a-a74b-ca916246f14c">
+<li style="list-style-type:disc"><strong>Only works for READ/DELETE</strong> operations.
+							</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80b4-9102-ce2f69a34d3b">
+<li style="list-style-type:disc">For INSERT/UPDATE, use <code>.save()</code>.</li>
+</ul><hr id="236b255d-72ff-800a-a424-f8128f2c6e48"/><h3 class="" id="236b255d-72ff-80dc-bbc0-d5890e4ad584">🧠 Method Name Format:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8050-b676-e14a9b81608b"><code class="language-Arduino" style="white-space:pre-wrap;word-break:break-all">find | read | get | count | exists | delete | remove
+   +
+PropertyName (CamelCase)
+   +
+By &lt;FieldName&gt; [And | Or | Between | In | Like ...]</code></pre><h3 class="" id="236b255d-72ff-8037-8ce9-e6b9bae9cab6">✅ Examples:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8027-b67c-da05ef8aa9a0"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">List&lt;UserDetails&gt; findByName(String name);
+
+List&lt;UserDetails&gt; findByNameAndPhone(String name, String phone);
+
+List&lt;UserDetails&gt; findByNameOrPhone(String name, String phone);
+
+List&lt;UserDetails&gt; findByNameIn(List&lt;String&gt; names);
+
+List&lt;UserDetails&gt; findByNameLike(String pattern);</code></pre><hr id="236b255d-72ff-80fc-9205-e0329607cf5d"/><h3 class="" id="236b255d-72ff-80a1-9e1d-de17d1b80aec">🔎 Supported Keywords:</h3><table class="simple-table" id="236b255d-72ff-80a6-a5ad-fc8acf294244">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8077-9196-dc663164d6d0">
+<th class="simple-table-header-color simple-table-header" id="MK&gt;K">Operator</th>
+<th class="simple-table-header-color simple-table-header" id="sX^r">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-806c-86df-fad9c98b417d">
+<td class="" id="MK&gt;K"><code>And</code>, <code>Or</code></td>
+<td class="" id="sX^r"><code>findByNameAndPhone</code></td>
+</tr>
+<tr id="236b255d-72ff-8019-982d-d79c143be908">
+<td class="" id="MK&gt;K"><code>Between</code></td>
+<td class="" id="sX^r"><code>findByCreatedDateBetween(Date, Date)</code></td>
+</tr>
+<tr id="236b255d-72ff-80e3-93c4-e276631ac702">
+<td class="" id="MK&gt;K"><code>Like</code></td>
+<td class="" id="sX^r"><code>findByNameLike('%abc%')</code></td>
+</tr>
+<tr id="236b255d-72ff-807b-9118-ca3988241608">
+<td class="" id="MK&gt;K"><code>IsNull</code></td>
+<td class="" id="sX^r"><code>findByEmailIsNull()</code></td>
+</tr>
+<tr id="236b255d-72ff-8049-9980-f4c722d5ab9e">
+<td class="" id="MK&gt;K"><code>NotNull</code></td>
+<td class="" id="sX^r"><code>findByEmailIsNotNull()</code></td>
+</tr>
+<tr id="236b255d-72ff-80ce-bbe7-c17a324ecd1f">
+<td class="" id="MK&gt;K"><code>In</code></td>
+<td class="" id="sX^r"><code>findByNameIn(List&lt;String&gt;)</code></td>
+</tr>
+<tr id="236b255d-72ff-80be-a44b-e7cee15dd05a">
+<td class="" id="MK&gt;K"><code>True/False</code></td>
+<td class="" id="sX^r"><code>findByActiveTrue()</code></td>
+</tr>
+<tr id="236b255d-72ff-8092-9ba1-d84f8c352534">
+<td class="" id="MK&gt;K"><code>Before/After</code></td>
+<td class="" id="sX^r"><code>findByCreatedDateBefore(Date)</code></td>
+</tr>
+<tr id="236b255d-72ff-805f-8d58-fee94e919d0f">
+<td class="" id="MK&gt;K"><code>OrderBy</code></td>
+<td class="" id="sX^r"><code>findByOrderByNameAsc()</code></td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-8012-8da8-fe7fd3670231"/><h3 class="" id="236b255d-72ff-805e-b86e-e8e1cc7bc9ed">🔄 Pagination &amp; Sorting:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80e5-bade-ecc0ad371627"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">Page&lt;UserDetails&gt; findByName(String name, Pageable pageable);
+
+List&lt;UserDetails&gt; findByName(String name, Sort sort);
+
+// Usage
+PageRequest.of(pageNumber, pageSize, Sort.by("name").descending())</code></pre><hr id="236b255d-72ff-80f3-b005-daca7a45ada5"/><h2 class="" id="236b255d-72ff-8052-a3ee-f991a7b14ca5">🔶 2. 🔥 JPQL (Java Persistence Query
+							Language)</h2><h3 class="" id="236b255d-72ff-80e5-86b0-e01dbb94a8d1">✅ What is it?</h3><ul class="bulleted-list" id="236b255d-72ff-80fb-9e1b-e61390878610">
+<li style="list-style-type:disc">Similar to SQL but operates on <strong>Entity
+									classes</strong> &amp; <strong>field names</strong>, not DB tables/columns.</li>
+</ul><h3 class="" id="236b255d-72ff-804a-8b2c-fb07833b0b47">✅ Syntax:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80c4-9a7a-cf7015e8baf1"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Query("SELECT u FROM UserDetails u WHERE u.name = :name")
+List&lt;UserDetails&gt; findByNameJPQL(@Param("name") String name);</code></pre><hr id="236b255d-72ff-80bd-83e4-fe1da0d6e616"/><h3 class="" id="236b255d-72ff-809a-b577-e1141481b97f">✅ Join Example (OneToMany):</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8053-a482-f6512608a6f6"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Query("SELECT u FROM User u JOIN u.orders o WHERE o.status = :status")
+List&lt;User&gt; findUsersWithOrderStatus(@Param("status") String status);</code></pre><hr id="236b255d-72ff-8072-81d2-d9f69dc5d4cc"/><h3 class="" id="236b255d-72ff-8069-8114-d8d2287580ef">✅ Custom DTO Projection:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80ce-b14b-fa2c0478f447"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Query("SELECT new com.dto.UserDTO(u.name, u.phone) FROM User u")
+List&lt;UserDTO&gt; getUserDto();</code></pre><hr id="236b255d-72ff-80c0-ac86-c2532fb6d81a"/><h3 class="" id="236b255d-72ff-80f2-bc12-c0aa3d7fc869">✅ Deletion with JPQL:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8046-97ff-c97ff814bb17"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Transactional
+@Modifying
+@Query("DELETE FROM UserDetails u WHERE u.name = :name")
+void deleteByName(@Param("name") String name);</code></pre><hr id="236b255d-72ff-8057-8dfe-e39e8fcbabbb"/><h2 class="" id="236b255d-72ff-800b-8660-d2a421578689">🔶 3. 💣 N+1 Problem (One of the most
+							asked!)</h2><h3 class="" id="236b255d-72ff-80d2-93d5-ca06c7cd8887">✅ Problem:</h3><ul class="bulleted-list" id="236b255d-72ff-80cc-92a2-e94dbce63be1">
+<li style="list-style-type:disc">You fetch a list of users (1 query), but for each user, JPA
+								lazily fetches children (N queries).</li>
+</ul><p class="" id="236b255d-72ff-80b3-9cdc-fda041c7fd2e">🧨 <strong>Total = N + 1 queries</strong>
+</p><p class="" id="236b255d-72ff-80a4-98ed-d98d35314122">➡️ Bad performance, unnecessary DB hits.
+						</p><hr id="236b255d-72ff-8042-86d2-d90143c275e9"/><h3 class="" id="236b255d-72ff-80a4-9c79-c808798eee45">❌ Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80b0-907f-f71d8e62e7e1"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">List&lt;User&gt; users = userRepository.findByName("John");
+for(User u : users) {
+    u.getAddresses().size(); // Each triggers a query
+}</code></pre><hr id="236b255d-72ff-80f2-8ed5-f0e36fb192fb"/><h3 class="" id="236b255d-72ff-809d-b7b5-fe6325c11873">✅ Solutions:</h3><h3 class="" id="236b255d-72ff-80f8-8e36-fe91005f5d90">1️⃣ <code>JOIN FETCH</code> (JPQL)</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8004-aad4-da35e6f5a5c5"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Query("SELECT u FROM User u JOIN FETCH u.addresses WHERE u.name = :name")
+List&lt;User&gt; findUsersWithAddresses(@Param("name") String name);</code></pre><p class="" id="236b255d-72ff-80bc-bc5d-d537fe66f418">✅ Fetches User + Addresses in <strong>1
+								single query</strong></p><hr id="236b255d-72ff-8025-be99-e346b19797b2"/><h3 class="" id="236b255d-72ff-80c7-adbe-e1aee7783454">2️⃣ <code>@BatchSize</code></h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80ab-a2b8-caa2f01f9a2b"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@OneToMany(fetch = FetchType.LAZY)
+@BatchSize(size = 10)
+private List&lt;Address&gt; addresses;</code></pre><p class="" id="236b255d-72ff-80ea-85f2-f3d66607dd04">✅ Groups queries, reduces N+1 to fewer
+							batch-sized chunks.</p><hr id="236b255d-72ff-8090-9d76-de7f8fefffa3"/><h3 class="" id="236b255d-72ff-8046-aa47-f032ddf81685">3️⃣ <code>@EntityGraph</code></h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-806d-9375-d09135c98214"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@EntityGraph(attributePaths = {"addresses"})
+List&lt;User&gt; findByName(String name);</code></pre><p class="" id="236b255d-72ff-8046-a7b8-e3f367f38886">✅ Declarative way to solve N+1, especially
+							in derived methods.</p><hr id="236b255d-72ff-8018-96b6-c047907bfed0"/><h2 class="" id="236b255d-72ff-80b6-bdf2-d5e682ba5a7f">🔶 4. 🔁 <code>@Modifying</code> and
+							<code>@Transactional</code></h2><h3 class="" id="236b255d-72ff-809f-9c6e-fe576f89f2ad">✅ When do you need it?</h3><ul class="bulleted-list" id="236b255d-72ff-8033-81da-cf2597beed7c">
+<li style="list-style-type:disc">For <code>DELETE</code>, <code>UPDATE</code>, or
+								<code>INSERT</code> using JPQL</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80a4-84d7-d94189a783af">
+<li style="list-style-type:disc">Otherwise, JPA will throw:
+								<code>Query must be a SELECT</code></li>
+</ul><h3 class="" id="236b255d-72ff-80b7-8746-c577a31937bd">✅ Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80b6-b2d5-d6be7f1e32ac"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Transactional
+@Modifying
+@Query("UPDATE UserDetails u SET u.phone = :phone WHERE u.name = :name")
+void updatePhoneByName(@Param("phone") String phone, @Param("name") String name);</code></pre><hr id="236b255d-72ff-80d7-b1e4-ffd4cdbab194"/><h2 class="" id="236b255d-72ff-80fd-88da-cedc64a44383">🔶 5. 🧭 Flush &amp; Clear</h2><table class="simple-table" id="236b255d-72ff-8039-b12e-fb549456e1f4">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-807a-b625-c434dc23ccbf">
+<th class="simple-table-header-color simple-table-header" id="]IG_">Method</th>
+<th class="simple-table-header-color simple-table-header" id="Qfx~">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-8059-8ad0-f1e96a86c400">
+<td class="" id="]IG_"><code>flush()</code></td>
+<td class="" id="Qfx~">Forces changes from persistence context to DB (but stays in
+										context)</td>
+</tr>
+<tr id="236b255d-72ff-8065-9d1b-c211a02c8efb">
+<td class="" id="]IG_"><code>clear()</code></td>
+<td class="" id="Qfx~">Clears the persistence context (detaches all entities)</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-80ee-a325-f47fd2bc159f"/><h2 class="" id="236b255d-72ff-80f9-88af-f83647721071">🔶 6. 🚀 Advanced Joins (Nested
+							Relationships)</h2><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80d1-af3e-c446365543d4"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@Query("SELECT a FROM A a JOIN a.bList b JOIN b.cList c WHERE c.prop = :value")
+List&lt;A&gt; findAWithBAndC(@Param("value") String value);</code></pre><p class="" id="236b255d-72ff-8090-b0d8-d656050670ec">✅ JPQL supports multi-level joins like
+							SQL, on mapped entity fields.</p><hr id="236b255d-72ff-80d7-8b17-f183fa89933f"/><h2 class="" id="236b255d-72ff-8011-90a0-ff53cc170e7b">🔶 7. 🔄 NamedQuery</h2><h3 class="" id="236b255d-72ff-8037-b6f4-dafac4d39bd6">✅ Purpose:</h3><ul class="bulleted-list" id="236b255d-72ff-80fe-b4d5-f837c80d7628">
+<li style="list-style-type:disc">Reuse queries without repeating <code>@Query</code>.</li>
+</ul><h3 class="" id="236b255d-72ff-80c9-bbdc-edaed3777648">✅ Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80f0-98ae-dc5e95fd50aa"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@NamedQuery(
+    name = "UserDetails.findByPhone",
+    query = "SELECT u FROM UserDetails u WHERE u.phone = :phone"
+)
+@Entity
+public class UserDetails { ... }</code></pre><hr id="236b255d-72ff-8060-84e2-d825c71cdec3"/><h2 class="" id="236b255d-72ff-8082-bce6-cdaeaeac7078">🔶 8. Summary Table</h2><table class="simple-table" id="236b255d-72ff-80bf-b1fb-dec140f742a9">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-80a5-86c9-c85618bc6e47">
+<th class="simple-table-header-color simple-table-header" id="yCW~">Feature</th>
+<th class="simple-table-header-color simple-table-header" id="b^~n">
+										Annotation/Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-8099-b166-d03696525aa6">
+<td class="" id="yCW~">Derived Query</td>
+<td class="" id="b^~n"><code>findByName</code>, <code>findByNameAndPhone</code></td>
+</tr>
+<tr id="236b255d-72ff-8084-923d-f09f929c9152">
+<td class="" id="yCW~">JPQL Query</td>
+<td class="" id="b^~n"><code>@Query("SELECT u FROM ...")</code></td>
+</tr>
+<tr id="236b255d-72ff-80da-83f5-ed9d3476ac5a">
+<td class="" id="yCW~">DTO from Query</td>
+<td class="" id="b^~n"><code>SELECT new com.dto.X(...)</code></td>
+</tr>
+<tr id="236b255d-72ff-80d0-9fab-fec7e3357a02">
+<td class="" id="yCW~">Modifying Query</td>
+<td class="" id="b^~n"><code>@Modifying</code>, <code>@Transactional</code></td>
+</tr>
+<tr id="236b255d-72ff-8045-b923-dee8c6bba57c">
+<td class="" id="yCW~">N+1 Fix</td>
+<td class="" id="b^~n"><code>JOIN FETCH</code>, <code>@BatchSize</code>,
+										<code>@EntityGraph</code></td>
+</tr>
+<tr id="236b255d-72ff-809c-9da6-d125d0638d07">
+<td class="" id="yCW~">Pagination</td>
+<td class="" id="b^~n"><code>Pageable</code>, <code>Page&lt;T&gt;</code></td>
+</tr>
+<tr id="236b255d-72ff-802e-9338-cd9c5eb8627b">
+<td class="" id="yCW~">Sorting</td>
+<td class="" id="b^~n"><code>Sort.by("field").ascending()</code></td>
+</tr>
+<tr id="236b255d-72ff-8090-a4a6-e1a83109a15b">
+<td class="" id="yCW~">Named Query</td>
+<td class="" id="b^~n"><code>@NamedQuery</code> on Entity</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-8069-8dea-ec91facb5354"/><h2 class="" id="236b255d-72ff-8024-bc2f-c9f5904c4f9a">🔶 9. Top Interview Questions</h2><h3 class="" id="236b255d-72ff-8058-b3da-f237f1c7d58f">💬 What are derived queries in Spring
+							Data JPA?</h3><blockquote class="" id="236b255d-72ff-801f-98ac-f8c823e5d6e1">Queries automatically generated
+							by Spring from method names based on naming conventions.</blockquote><h3 class="" id="236b255d-72ff-80f3-b2ed-eacc76c6888e">💬 How do you solve N+1 problem?</h3><blockquote class="" id="236b255d-72ff-8036-83b7-d9d38b468fe2">Use:<ol class="numbered-list" id="236b255d-72ff-80bc-9d32-e5744433b2c2" start="1" type="1">
+<li><code>JOIN FETCH</code> in JPQL</li>
+</ol>
+<ol class="numbered-list" id="236b255d-72ff-80ba-9afd-dc7aebc219c2" start="2" type="1">
+<li><code>@BatchSize</code></li>
+</ol>
+<ol class="numbered-list" id="236b255d-72ff-8058-893b-f06b58e1dccb" start="3" type="1">
+<li><code>@EntityGraph</code></li>
+</ol>
+</blockquote><h3 class="" id="236b255d-72ff-80c8-9f7d-f9f197ccd249">💬 When do you use
+							<code>@Modifying</code>?</h3><blockquote class="" id="236b255d-72ff-8066-b832-c3aaccbea342">For non-select queries
+							(update/delete/insert) using @Query.</blockquote><h3 class="" id="236b255d-72ff-80ee-a1a5-d86eae68f809">💬 Can you paginate and sort derived
+							query results?</h3><blockquote class="" id="236b255d-72ff-8088-bb7f-c2ca0f98d1e1">Yes, use Pageable and Sort as
+							method parameters.</blockquote><h3 class="" id="236b255d-72ff-8068-9df9-ec0f03785328">💬 Difference between JPQL and SQL?</h3><blockquote class="" id="236b255d-72ff-8065-9315-dcfccb682fda">JPQL is entity-based and
+							DB-independent. SQL is table-based.</blockquote></body></html>

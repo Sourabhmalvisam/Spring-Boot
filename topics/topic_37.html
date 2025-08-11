@@ -1,0 +1,1065 @@
+<html><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Spring Boot</title>
+<style>
+		/* cspell:disable-file */
+		/* webkit printing magic: print all background colors */
+		html {
+			-webkit-print-color-adjust: exact;
+		}
+
+		* {
+			box-sizing: border-box;
+			-webkit-print-color-adjust: exact;
+		}
+
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		@media only screen {
+			body {
+				margin: 2em auto;
+				max-width: 900px;
+				color: rgb(55, 53, 47);
+			}
+		}
+
+		body {
+			line-height: 1.5;
+			white-space: nowrap;
+		}
+
+		a,
+		a.visited {
+			color: inherit;
+			text-decoration: underline;
+		}
+
+		.pdf-relative-link-path {
+			font-size: 80%;
+			color: #444;
+		}
+
+		h1,
+		h2,
+		h3 {
+			letter-spacing: -0.01em;
+			line-height: 1.2;
+			font-weight: 600;
+			margin-bottom: 0;
+		}
+
+		.page-title {
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin-top: 0;
+			margin-bottom: 0.75em;
+		}
+
+		h1 {
+			font-size: 1.875rem;
+			margin-top: 1.875rem;
+		}
+
+		h2 {
+			font-size: 1.5rem;
+			margin-top: 1.5rem;
+		}
+
+		h3 {
+			font-size: 1.25rem;
+			margin-top: 1.25rem;
+		}
+
+		.source {
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			padding: 1.5em;
+			word-break: break-all;
+		}
+
+		.callout {
+			border-radius: 3px;
+			padding: 1rem;
+		}
+
+		figure {
+			margin: 1.25em 0;
+			page-break-inside: avoid;
+		}
+
+		figcaption {
+			opacity: 0.5;
+			font-size: 85%;
+			margin-top: 0.5em;
+		}
+
+		mark {
+			background-color: transparent;
+		}
+
+		.indented {
+			padding-left: 1.5em;
+		}
+
+		hr {
+			background: transparent;
+			display: block;
+			width: 100%;
+			height: 1px;
+			visibility: visible;
+			border: none;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+		}
+
+		img {
+			max-width: 100%;
+		}
+
+		@media only print {
+			img {
+				max-height: 100vh;
+				object-fit: contain;
+			}
+		}
+
+		@page {
+			margin: 1in;
+		}
+
+		.collection-content {
+			font-size: 0.875rem;
+		}
+
+		.column-list {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.column {
+			padding: 0 1em;
+		}
+
+		.column:first-child {
+			padding-left: 0;
+		}
+
+		.column:last-child {
+			padding-right: 0;
+		}
+
+		.table_of_contents-item {
+			display: block;
+			font-size: 0.875rem;
+			line-height: 1.3;
+			padding: 0.125rem;
+		}
+
+		.table_of_contents-indent-1 {
+			margin-left: 1.5rem;
+		}
+
+		.table_of_contents-indent-2 {
+			margin-left: 3rem;
+		}
+
+		.table_of_contents-indent-3 {
+			margin-left: 4.5rem;
+		}
+
+		.table_of_contents-link {
+			text-decoration: none;
+			opacity: 0.7;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid rgba(55, 53, 47, 0.09);
+			border-collapse: collapse;
+		}
+
+		table {
+			border-left: none;
+			border-right: none;
+		}
+
+		th,
+		td {
+			font-weight: normal;
+			padding: 0.25em 0.5em;
+			line-height: 1.5;
+			min-height: 1.5em;
+			text-align: left;
+		}
+
+		th {
+			color: rgba(55, 53, 47, 0.6);
+		}
+
+		ol,
+		ul {
+			margin: 0;
+			margin-block-start: 0.6em;
+			margin-block-end: 0.6em;
+		}
+
+		li>ol:first-child,
+		li>ul:first-child {
+			margin-block-start: 0.6em;
+		}
+
+		ul>li {
+			list-style: disc;
+		}
+
+		ul.to-do-list {
+			padding-inline-start: 0;
+		}
+
+		ul.to-do-list>li {
+			list-style: none;
+		}
+
+		.to-do-children-checked {
+			text-decoration: line-through;
+			opacity: 0.375;
+		}
+
+		ul.toggle>li {
+			list-style: none;
+		}
+
+		ul {
+			padding-inline-start: 1.7em;
+		}
+
+		ul>li {
+			padding-left: 0.1em;
+		}
+
+		ol {
+			padding-inline-start: 1.6em;
+		}
+
+		ol>li {
+			padding-left: 0.2em;
+		}
+
+		.mono ol {
+			padding-inline-start: 2em;
+		}
+
+		.mono ol>li {
+			text-indent: -0.4em;
+		}
+
+		.toggle {
+			padding-inline-start: 0em;
+			list-style-type: none;
+		}
+
+		/* Indent toggle children */
+		.toggle>li>details {
+			padding-left: 1.7em;
+		}
+
+		.toggle>li>details>summary {
+			margin-left: -1.1em;
+		}
+
+		.selected-value {
+			display: inline-block;
+			padding: 0 0.5em;
+			background: rgba(206, 205, 202, 0.5);
+			border-radius: 3px;
+			margin-right: 0.5em;
+			margin-top: 0.3em;
+			margin-bottom: 0.3em;
+			white-space: nowrap;
+		}
+
+		.collection-title {
+			display: inline-block;
+			margin-right: 1em;
+		}
+
+		.page-description {
+			margin-bottom: 2em;
+		}
+
+		.simple-table {
+			margin-top: 1em;
+			font-size: 0.875rem;
+			empty-cells: show;
+		}
+
+		.simple-table td {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table th {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table-header-color {
+			background: rgb(247, 246, 243);
+			color: black;
+		}
+
+		.simple-table-header {
+			font-weight: 500;
+		}
+
+		time {
+			opacity: 0.5;
+		}
+
+		.icon {
+			display: inline-block;
+			max-width: 1.2em;
+			max-height: 1.2em;
+			text-decoration: none;
+			vertical-align: text-bottom;
+			margin-right: 0.5em;
+		}
+
+		img.icon {
+			border-radius: 3px;
+		}
+
+		.user-icon {
+			width: 1.5em;
+			height: 1.5em;
+			border-radius: 100%;
+			margin-right: 0.5rem;
+		}
+
+		.user-icon-inner {
+			font-size: 0.8em;
+		}
+
+		.text-icon {
+			border: 1px solid #000;
+			text-align: center;
+		}
+
+		.page-cover-image {
+			display: block;
+			object-fit: cover;
+			width: 100%;
+			max-height: 30vh;
+		}
+
+		.page-header-icon {
+			font-size: 3rem;
+			margin-bottom: 1rem;
+		}
+
+		.page-header-icon-with-cover {
+			margin-top: -0.72em;
+			margin-left: 0.07em;
+		}
+
+		.page-header-icon img {
+			border-radius: 3px;
+		}
+
+		.link-to-page {
+			margin: 1em 0;
+			padding: 0;
+			border: none;
+			font-weight: 500;
+		}
+
+		p>.user {
+			opacity: 0.5;
+		}
+
+		td>.user,
+		td>time {
+			white-space: nowrap;
+		}
+
+		input[type="checkbox"] {
+			transform: scale(1.5);
+			margin-right: 0.6em;
+			vertical-align: middle;
+		}
+
+		p {
+			margin-top: 0.5em;
+			margin-bottom: 0.5em;
+		}
+
+		.image {
+			border: none;
+			margin: 1.5em 0;
+			padding: 0;
+			border-radius: 0;
+			text-align: center;
+		}
+
+		.code,
+		code {
+			background: rgba(135, 131, 120, 0.15);
+			border-radius: 3px;
+			padding: 0.2em 0.4em;
+			border-radius: 3px;
+			font-size: 85%;
+			tab-size: 2;
+		}
+
+		code {
+			color: #eb5757;
+		}
+
+		.code {
+			padding: 1.5em 1em;
+		}
+
+		.code-wrap {
+			white-space: nowrap;
+			word-break: break-all;
+		}
+
+		.code>code {
+			background: none;
+			padding: 0;
+			font-size: 100%;
+			color: inherit;
+		}
+
+		blockquote {
+			font-size: 1.25em;
+			margin: 1em 0;
+			padding-left: 1em;
+			border-left: 3px solid rgb(55, 53, 47);
+		}
+
+		.bookmark {
+			text-decoration: none;
+			max-height: 8em;
+			padding: 0;
+			display: flex;
+			width: 100%;
+			align-items: stretch;
+		}
+
+		.bookmark-title {
+			font-size: 0.85em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: 1.75em;
+			white-space: nowrap;
+		}
+
+		.bookmark-text {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.bookmark-info {
+			flex: 4 1 180px;
+			padding: 12px 14px 14px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.bookmark-image {
+			width: 33%;
+			flex: 1 1 180px;
+			display: block;
+			position: relative;
+			object-fit: cover;
+			border-radius: 1px;
+		}
+
+		.bookmark-description {
+			color: rgba(55, 53, 47, 0.6);
+			font-size: 0.75em;
+			overflow: hidden;
+			max-height: 4.5em;
+			word-break: break-word;
+		}
+
+		.bookmark-href {
+			font-size: 0.75em;
+			margin-top: 0.25em;
+		}
+
+		.sans {
+			font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+		}
+
+		.code {
+			font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+		}
+
+		.serif {
+			font-family: Lyon-Text, Georgia, ui-serif, serif;
+		}
+
+		.mono {
+			font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+		}
+
+		.pdf .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR';
+		}
+
+		.pdf .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.pdf .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR';
+		}
+
+		.pdf .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.highlight-default {
+			color: rgba(50, 48, 44, 1);
+		}
+
+		.highlight-gray {
+			color: rgba(115, 114, 110, 1);
+			fill: rgba(115, 114, 110, 1);
+		}
+
+		.highlight-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.highlight-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.highlight-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.highlight-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.highlight-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.highlight-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.highlight-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.highlight-red {
+			color: rgba(205, 60, 58, 1);
+			fill: rgba(205, 60, 58, 1);
+		}
+
+		.highlight-default_background {
+			color: rgba(50, 48, 44, 1);
+		}
+
+		.highlight-gray_background {
+			background: rgba(248, 248, 247, 1);
+		}
+
+		.highlight-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.highlight-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.highlight-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.highlight-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.highlight-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.highlight-purple_background {
+			background: rgba(248, 243, 252, 1);
+		}
+
+		.highlight-pink_background {
+			background: rgba(252, 241, 246, 1);
+		}
+
+		.highlight-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.block-color-default {
+			color: inherit;
+			fill: inherit;
+		}
+
+		.block-color-gray {
+			color: rgba(115, 114, 110, 1);
+			fill: rgba(115, 114, 110, 1);
+		}
+
+		.block-color-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.block-color-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.block-color-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.block-color-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.block-color-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.block-color-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.block-color-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.block-color-red {
+			color: rgba(205, 60, 58, 1);
+			fill: rgba(205, 60, 58, 1);
+		}
+
+		.block-color-default_background {
+			color: inherit;
+			fill: inherit;
+		}
+
+		.block-color-gray_background {
+			background: rgba(248, 248, 247, 1);
+		}
+
+		.block-color-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.block-color-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.block-color-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.block-color-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.block-color-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.block-color-purple_background {
+			background: rgba(248, 243, 252, 1);
+		}
+
+		.block-color-pink_background {
+			background: rgba(252, 241, 246, 1);
+		}
+
+		.block-color-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.select-value-color-default {
+			background-color: rgba(84, 72, 49, 0.08);
+		}
+
+		.select-value-color-gray {
+			background-color: rgba(84, 72, 49, 0.15);
+		}
+
+		.select-value-color-brown {
+			background-color: rgba(210, 162, 141, 0.35);
+		}
+
+		.select-value-color-orange {
+			background-color: rgba(224, 124, 57, 0.27);
+		}
+
+		.select-value-color-yellow {
+			background-color: rgba(236, 191, 66, 0.39);
+		}
+
+		.select-value-color-green {
+			background-color: rgba(123, 183, 129, 0.27);
+		}
+
+		.select-value-color-blue {
+			background-color: rgba(93, 165, 206, 0.27);
+		}
+
+		.select-value-color-purple {
+			background-color: rgba(168, 129, 197, 0.27);
+		}
+
+		.select-value-color-pink {
+			background-color: rgba(225, 136, 179, 0.27);
+		}
+
+		.select-value-color-red {
+			background-color: rgba(244, 171, 159, 0.4);
+		}
+
+		.checkbox {
+			display: inline-flex;
+			vertical-align: text-bottom;
+			width: 16;
+			height: 16;
+			background-size: 16px;
+			margin-left: 2px;
+			margin-right: 5px;
+		}
+
+		.checkbox-on {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+
+		.checkbox-off {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+	</style>
+</head><body><h1>Role based Authorization - (Annotation)</h1><h1 class="" id="236b255d-72ff-8073-81bf-fd5458765788">🔐 Role-Based Authorization Using
+							Annotations in Spring Security</h1><hr id="236b255d-72ff-803d-a654-e675d81b65da"/><h2 class="" id="236b255d-72ff-8051-93ab-c3678511792b">✅ 1. What is Role-Based Authorization?
+						</h2><p class="" id="236b255d-72ff-80a6-8fed-e0bc9be1bf5f">Authorization is the process of
+							<strong>allowing or denying access to specific resources</strong> based on the
+							<strong>user’s role or permission</strong>.</p><p class="" id="236b255d-72ff-80ac-8846-e2102ccf11f1">Spring Security supports <strong>multiple
+								ways to implement authorization</strong>, including:</p><ul class="bulleted-list" id="236b255d-72ff-8041-af3a-edf94762011b">
+<li style="list-style-type:disc">Filter-level access control (via
+								<code>.antMatchers().hasRole()</code>)</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-800b-9ce0-ee029b60fc11">
+<li style="list-style-type:disc">Annotation-based (method-level) access control →
+								<strong>this is our focus</strong></li>
+</ul><hr id="236b255d-72ff-80cc-8626-cdba1da2dfcf"/><h2 class="" id="236b255d-72ff-8068-8760-ee48e81863a7">🎯 2. Annotations Used</h2><table class="simple-table" id="236b255d-72ff-80c7-8a4b-c0b695ac20df">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-80ab-a849-f610917ea4af">
+<th class="simple-table-header-color simple-table-header" id="uUu]">Annotation</th>
+<th class="simple-table-header-color simple-table-header" id="mGr]">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80c0-82c0-c152eee168c3">
+<td class="" id="uUu]"><code>@PreAuthorize</code></td>
+<td class="" id="mGr]">Runs <strong>before method execution</strong></td>
+</tr>
+<tr id="236b255d-72ff-8097-913c-cc22e5c26a79">
+<td class="" id="uUu]"><code>@PostAuthorize</code></td>
+<td class="" id="mGr]">Runs <strong>after method execution</strong>, but before
+										response is sent</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-8058-a881-ccdaf6a1a504"/><h2 class="" id="236b255d-72ff-8046-8360-cd016875b81a">🔧 3. Enabling Annotation-Based
+							Authorization</h2><p class="" id="236b255d-72ff-80d1-99dd-c2162daa5be3">Add this in your security config:</p><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8017-b11a-fd7c5f04014d"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@EnableMethodSecurity  // Replaces @EnableGlobalMethodSecurity in Spring Security 6+
+public class SecurityConfig {
+    // other beans &amp; filters
+}</code></pre><blockquote class="" id="236b255d-72ff-80c4-8375-f00d8666cc51">⚠️ Without this, @PreAuthorize
+							and @PostAuthorize annotations will be ignored.</blockquote><hr id="236b255d-72ff-80fb-b7d0-e87efba02724"/><h2 class="" id="236b255d-72ff-8085-903d-d14973e57dc1">🧪 4. Example Usage</h2><h3 class="" id="236b255d-72ff-80a8-9fcc-e85b495b3c71">👤 User with Roles and Permissions</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8083-a743-fa774d195480"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">User.withUsername("ganesh")
+    .password("{noop}pass123")
+    .roles("USER")  // Spring internally stores it as ROLE_USER
+    .authorities("ORDER_READ", "SALES_DELETE")  // granular permissions
+    .build();</code></pre><hr id="236b255d-72ff-8008-a101-ec5984602f47"/><h3 class="" id="236b255d-72ff-8071-818e-f10d282d22fe">🧾 OrderController</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8030-a9ca-d9a0a34715b1"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@RestController
+public class OrderController {
+
+    @PreAuthorize("hasRole('USER') and hasAuthority('ORDER_READ')")
+    @GetMapping("/orders")
+    public String getOrders() {
+        return "Order Data";
+    }
+}</code></pre><hr id="236b255d-72ff-80c9-a82b-f9d2719ef41c"/><h3 class="" id="236b255d-72ff-8098-bab1-c66731afd7f4">🧾 SalesController</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-802b-b62f-f50b8c132e4a"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@RestController
+public class SalesController {
+
+    @PreAuthorize("hasAuthority('SALES_READ')")
+    @GetMapping("/sales")
+    public String getSales() {
+        return "Sales Data";
+    }
+}</code></pre><hr id="236b255d-72ff-8071-9fba-ddc16181c4c2"/><h2 class="" id="236b255d-72ff-8005-bf2b-d691e45b85c3">🔍 5. hasRole vs hasAuthority</h2><table class="simple-table" id="236b255d-72ff-8035-9594-c5acc371b0ac">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8057-9ddd-fbf8f9829114">
+<th class="simple-table-header-color simple-table-header" id="ikg:">Method</th>
+<th class="simple-table-header-color simple-table-header" id="DOQF">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-8042-93b1-dd65accf1722">
+<td class="" id="ikg:"><code>hasRole('ADMIN')</code></td>
+<td class="" id="DOQF">Looks for <code>ROLE_ADMIN</code></td>
+</tr>
+<tr id="236b255d-72ff-803c-856c-d04ddf76f594">
+<td class="" id="ikg:"><code>hasAuthority('ADMIN')</code></td>
+<td class="" id="DOQF">Looks for exact string <code>ADMIN</code></td>
+</tr>
+</tbody>
+</table><blockquote class="" id="236b255d-72ff-80b0-ae98-f075992b666f">⚠️ Internally,
+							hasRole('X') appends "ROLE_" prefix.</blockquote><hr id="236b255d-72ff-8091-8843-d491380ddfc8"/><h2 class="" id="236b255d-72ff-80c0-89d1-cd8f4423c305">💡 6. Expression Language Support (SpEL)
+						</h2><p class="" id="236b255d-72ff-809b-9a9c-dc0c6cdfe108">Spring uses <strong>SpEL (Spring
+								Expression Language)</strong> to evaluate conditions in <code>@PreAuthorize</code>.</p><h3 class="" id="236b255d-72ff-808a-9c39-e633a58dc6e0">✅ Logical Operators</h3><table class="simple-table" id="236b255d-72ff-8082-a78b-e115fbb0b22e">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8089-9f1a-f32c9f861951">
+<th class="simple-table-header-color simple-table-header" id="`{F[">Operator</th>
+<th class="simple-table-header-color simple-table-header" id="DbVW">Description</th>
+<th class="simple-table-header-color simple-table-header" id="aeRx">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-8005-9c17-d6c21055e31d">
+<td class="" id="`{F["><code>and</code></td>
+<td class="" id="DbVW">Logical AND</td>
+<td class="" id="aeRx">
+<code>hasRole('ADMIN') and hasAuthority('READ')</code></td>
+</tr>
+<tr id="236b255d-72ff-8069-b71e-d027c3456dd7">
+<td class="" id="`{F["><code>or</code></td>
+<td class="" id="DbVW">Logical OR</td>
+<td class="" id="aeRx">
+<code>hasRole('ADMIN') or hasRole('USER')</code></td>
+</tr>
+<tr id="236b255d-72ff-8065-b0c8-c22592c45973">
+<td class="" id="`{F["><code>not</code> / <code>!</code></td>
+<td class="" id="DbVW">Logical NOT</td>
+<td class="" id="aeRx"><code>!hasRole('ADMIN')</code></td>
+</tr>
+</tbody>
+</table><h3 class="" id="236b255d-72ff-801d-832b-e02fdd99a49b">✅ Relational Operators</h3><table class="simple-table" id="236b255d-72ff-8096-b77d-d2ae3b7642b1">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8038-843b-ec5314b2e7d3">
+<th class="simple-table-header-color simple-table-header" id="ll_f">Operator</th>
+<th class="simple-table-header-color simple-table-header" id="Bcri">Meaning</th>
+<th class="simple-table-header-color simple-table-header" id="PrWD">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80ab-8282-d79f3f24ffa0">
+<td class="" id="ll_f"><code>==</code></td>
+<td class="" id="Bcri">Equal to</td>
+<td class="" id="PrWD"><code>#id == 100</code></td>
+</tr>
+<tr id="236b255d-72ff-809f-b957-f239eba7cb00">
+<td class="" id="ll_f"><code>!=</code></td>
+<td class="" id="Bcri">Not equal to</td>
+<td class="" id="PrWD"><code>#value != 'xyz'</code></td>
+</tr>
+<tr id="236b255d-72ff-8000-a177-dea1aa58d5a6">
+<td class="" id="ll_f"><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code>
+<code>&gt;=</code></td>
+<td class="" id="Bcri">Comparison operators</td>
+<td class="" id="PrWD"></td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-8087-81f4-e34030c0b389"/><h2 class="" id="236b255d-72ff-8089-a773-eed4a17f1179">🧠 7. Accessing Principal Info (Dynamic
+							Authorization)</h2><p class="" id="236b255d-72ff-80d6-ad80-dd2fdd426fbe">You can access current user’s info using
+							the <code>authentication</code> object:</p><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-804a-9a8b-feb9865b3f9d"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@PreAuthorize("#id == authentication.principal.id")
+@GetMapping("/users/{id}")
+public User getUserById(@PathVariable Long id) {
+    return userService.getUser(id);
+}</code></pre><hr id="236b255d-72ff-80fb-bdca-e71f66393c03"/><h2 class="" id="236b255d-72ff-8009-b487-e42f64e5d7d3">⏳ 8. Post Authorization –
+							<code>@PostAuthorize</code></h2><p class="" id="236b255d-72ff-80d7-b342-d21763ab2054">Use when you need to <strong>authorize
+								based on return object</strong> or post-processing logic.</p><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8051-900e-e7dc83eb6101"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@PostAuthorize("returnObject.username == authentication.name")
+@GetMapping("/user/{id}")
+public User getUser(@PathVariable Long id) {
+    return userService.findById(id);
+}</code></pre><blockquote class="" id="236b255d-72ff-801f-b58e-e374be840fc2">✅ Example: Prevent user from
+							accessing someone else’s data.</blockquote><hr id="236b255d-72ff-8022-9d2a-dcede567fb01"/><h2 class="" id="236b255d-72ff-801a-9479-e24afb4dabd0">⚙️ 9. How Does It Work Internally?</h2><h3 class="" id="236b255d-72ff-801d-9090-c41e6a513c9b">Interceptors:</h3><ul class="bulleted-list" id="236b255d-72ff-80f9-834a-f78ce0c6b959">
+<li style="list-style-type:disc"><code>@PreAuthorize</code> is intercepted by:
+								<script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/>
+<pre class="code code-wrap" id="236b255d-72ff-80c2-8c18-f74c2c3a8abd"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">AuthorizationManagerBeforeMethodInterceptor</code></pre>
+</li>
+</ul><ul class="bulleted-list" id="236b255d-72ff-80bc-8b80-d36056b46f4a">
+<li style="list-style-type:disc"><code>@PostAuthorize</code> is intercepted by:
+								<script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/>
+<pre class="code code-wrap" id="236b255d-72ff-806c-a916-dd4bd9a0ad95"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">AuthorizationManagerAfterMethodInterceptor</code></pre>
+</li>
+</ul><p class="" id="236b255d-72ff-80a9-9a44-dce5e9c42276">They:</p><ol class="numbered-list" id="236b255d-72ff-8051-a75c-e37ee6129ded" start="1" type="1">
+<li>Parse the annotation string using <code>SpelExpressionParser</code></li>
+</ol><ol class="numbered-list" id="236b255d-72ff-8038-8d5f-e348b55f989e" start="2" type="1">
+<li>Resolve symbols (like <code>authentication.principal</code>)</li>
+</ol><ol class="numbered-list" id="236b255d-72ff-800e-b96e-d7ca01013bdb" start="3" type="1">
+<li>Create an <strong>Abstract Syntax Tree (AST)</strong></li>
+</ol><ol class="numbered-list" id="236b255d-72ff-80d6-8689-dd7c1909893f" start="4" type="1">
+<li>Evaluate the expression</li>
+</ol><ol class="numbered-list" id="236b255d-72ff-804d-b0f8-db52a0d691eb" start="5" type="1">
+<li><strong>Allow or block method execution</strong></li>
+</ol><hr id="236b255d-72ff-8044-871e-eb5d70eb7b09"/><h2 class="" id="236b255d-72ff-8059-8e66-dc8a3c9a3587">🧪 10. Real-World Scenario</h2><table class="simple-table" id="236b255d-72ff-80f1-a2e2-c5c96575375d">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8082-bcd7-d6596f14cb8c">
+<th class="simple-table-header-color simple-table-header" id="[azJ">Role</th>
+<th class="simple-table-header-color simple-table-header" id="ch_&lt;">Permissions
+									</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80a2-a7f7-ebabc0f4bed5">
+<td class="" id="[azJ"><code>ROLE_USER</code></td>
+<td class="" id="ch_&lt;"><code>ORDER_READ</code>, <code>ORDER_WRITE</code></td>
+</tr>
+<tr id="236b255d-72ff-802e-9d91-df027d70e5b8">
+<td class="" id="[azJ"><code>ROLE_ADMIN</code></td>
+<td class="" id="ch_&lt;">All permissions</td>
+</tr>
+</tbody>
+</table><h3 class="" id="236b255d-72ff-8057-ab88-f75fd6cd93bb">Sample:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80f7-a514-e665df0e93c9"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">@PreAuthorize("hasRole('USER') and hasAuthority('ORDER_WRITE')")
+@PostMapping("/orders")
+public String createOrder() {
+    return "Created";
+}</code></pre><hr id="236b255d-72ff-802f-b848-e5b6d7a8841b"/><h2 class="" id="236b255d-72ff-8016-b62d-c70fa739308f">❌ 11. Common Mistakes</h2><table class="simple-table" id="236b255d-72ff-80b2-8c29-e6a98bad1f4f">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-8037-87b3-cd56767d72f1">
+<th class="simple-table-header-color simple-table-header" id="ivgU">Mistake</th>
+<th class="simple-table-header-color simple-table-header" id="IK;L">Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-8062-86ef-ea31a7585f9b">
+<td class="" id="ivgU">Not enabling <code>@EnableMethodSecurity</code></td>
+<td class="" id="IK;L">Add it in your config</td>
+</tr>
+<tr id="236b255d-72ff-8096-95d4-fac90fa89e08">
+<td class="" id="ivgU">Using <code>hasRole('ADMIN')</code> but setting
+										authority <code>ADMIN</code></td>
+<td class="" id="IK;L">Use <code>ROLE_ADMIN</code> or use <code>hasAuthority</code>
+</td>
+</tr>
+<tr id="236b255d-72ff-80bd-9ddd-d86675689f41">
+<td class="" id="ivgU">Using <code>@PreAuthorize</code> on constructor or static
+										method</td>
+<td class="" id="IK;L">Not allowed</td>
+</tr>
+<tr id="236b255d-72ff-80cd-bdc8-c25750c317a7">
+<td class="" id="ivgU">Trying to use request-specific data not available in context
+									</td>
+<td class="" id="IK;L">Use <code>#paramName</code> properly</td>
+</tr>
+</tbody>
+</table><hr id="236b255d-72ff-80dc-a352-c3899b4ecb65"/><h2 class="" id="236b255d-72ff-803e-9766-d9f78d385b7f">📚 12. Summary for Interviews</h2><table class="simple-table" id="236b255d-72ff-8041-bf1f-f786139cce08">
+<thead class="simple-table-header">
+<tr id="236b255d-72ff-80fe-94b5-cf5f708cddc0">
+<th class="simple-table-header-color simple-table-header" id="IYSi">Topic</th>
+<th class="simple-table-header-color simple-table-header" id="TfUI">Key Point</th>
+</tr>
+</thead>
+<tbody>
+<tr id="236b255d-72ff-80b6-ba61-fd63180313ce">
+<td class="" id="IYSi">Purpose</td>
+<td class="" id="TfUI">Fine-grained access control using annotations</td>
+</tr>
+<tr id="236b255d-72ff-8011-be6f-e99b49f9551e">
+<td class="" id="IYSi">Annotation Types</td>
+<td class="" id="TfUI"><code>@PreAuthorize</code>, <code>@PostAuthorize</code></td>
+</tr>
+<tr id="236b255d-72ff-80fd-9507-d9771e8e1cdf">
+<td class="" id="IYSi">SpEL Support</td>
+<td class="" id="TfUI">Yes (for dynamic checks)</td>
+</tr>
+<tr id="236b255d-72ff-804d-b498-f708e4f075ec">
+<td class="" id="IYSi">Interceptors Used</td>
+<td class="" id="TfUI"><code>AuthorizationManagerBeforeMethodInterceptor</code>,
+										<code>AuthorizationManagerAfterMethodInterceptor</code></td>
+</tr>
+<tr id="236b255d-72ff-80bb-8463-fc6649d4a94f">
+<td class="" id="IYSi">Roles vs Authorities</td>
+<td class="" id="TfUI"><code>hasRole()</code> appends
+										<code>"ROLE_"</code>; <code>hasAuthority()</code> checks as-is</td>
+</tr>
+<tr id="236b255d-72ff-80f3-b954-ca7790a7d96d">
+<td class="" id="IYSi">Dynamic Checks</td>
+<td class="" id="TfUI">Possible using <code>authentication</code>, <code>#id</code>,
+										<code>returnObject</code></td>
+</tr>
+</tbody>
+</table></body></html>
