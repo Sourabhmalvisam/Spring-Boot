@@ -1,1124 +1,680 @@
-<html><head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-<title>Spring Boot</title>
-<style>
-		/* cspell:disable-file */
-		/* webkit printing magic: print all background colors */
-		html {
-			-webkit-print-color-adjust: exact;
-		}
-
-		* {
-			box-sizing: border-box;
-			-webkit-print-color-adjust: exact;
-		}
-
-		html,
-		body {
-			margin: 0;
-			padding: 0;
-		}
-
-		@media only screen {
-			body {
-				margin: 2em auto;
-				max-width: 900px;
-				color: rgb(55, 53, 47);
-			}
-		}
-
-		body {
-			line-height: 1.5;
-			white-space: nowrap;
-		}
-
-		a,
-		a.visited {
-			color: inherit;
-			text-decoration: underline;
-		}
-
-		.pdf-relative-link-path {
-			font-size: 80%;
-			color: #444;
-		}
-
-		h1,
-		h2,
-		h3 {
-			letter-spacing: -0.01em;
-			line-height: 1.2;
-			font-weight: 600;
-			margin-bottom: 0;
-		}
-
-		.page-title {
-			font-size: 2.5rem;
-			font-weight: 700;
-			margin-top: 0;
-			margin-bottom: 0.75em;
-		}
-
-		h1 {
-			font-size: 1.875rem;
-			margin-top: 1.875rem;
-		}
-
-		h2 {
-			font-size: 1.5rem;
-			margin-top: 1.5rem;
-		}
-
-		h3 {
-			font-size: 1.25rem;
-			margin-top: 1.25rem;
-		}
-
-		.source {
-			border: 1px solid #ddd;
-			border-radius: 3px;
-			padding: 1.5em;
-			word-break: break-all;
-		}
-
-		.callout {
-			border-radius: 3px;
-			padding: 1rem;
-		}
-
-		figure {
-			margin: 1.25em 0;
-			page-break-inside: avoid;
-		}
-
-		figcaption {
-			opacity: 0.5;
-			font-size: 85%;
-			margin-top: 0.5em;
-		}
-
-		mark {
-			background-color: transparent;
-		}
-
-		.indented {
-			padding-left: 1.5em;
-		}
-
-		hr {
-			background: transparent;
-			display: block;
-			width: 100%;
-			height: 1px;
-			visibility: visible;
-			border: none;
-			border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-		}
-
-		img {
-			max-width: 100%;
-		}
-
-		@media only print {
-			img {
-				max-height: 100vh;
-				object-fit: contain;
-			}
-		}
-
-		@page {
-			margin: 1in;
-		}
-
-		.collection-content {
-			font-size: 0.875rem;
-		}
-
-		.column-list {
-			display: flex;
-			justify-content: space-between;
-		}
-
-		.column {
-			padding: 0 1em;
-		}
-
-		.column:first-child {
-			padding-left: 0;
-		}
-
-		.column:last-child {
-			padding-right: 0;
-		}
-
-		.table_of_contents-item {
-			display: block;
-			font-size: 0.875rem;
-			line-height: 1.3;
-			padding: 0.125rem;
-		}
-
-		.table_of_contents-indent-1 {
-			margin-left: 1.5rem;
-		}
-
-		.table_of_contents-indent-2 {
-			margin-left: 3rem;
-		}
-
-		.table_of_contents-indent-3 {
-			margin-left: 4.5rem;
-		}
-
-		.table_of_contents-link {
-			text-decoration: none;
-			opacity: 0.7;
-			border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-		}
-
-		table,
-		th,
-		td {
-			border: 1px solid rgba(55, 53, 47, 0.09);
-			border-collapse: collapse;
-		}
-
-		table {
-			border-left: none;
-			border-right: none;
-		}
-
-		th,
-		td {
-			font-weight: normal;
-			padding: 0.25em 0.5em;
-			line-height: 1.5;
-			min-height: 1.5em;
-			text-align: left;
-		}
-
-		th {
-			color: rgba(55, 53, 47, 0.6);
-		}
-
-		ol,
-		ul {
-			margin: 0;
-			margin-block-start: 0.6em;
-			margin-block-end: 0.6em;
-		}
-
-		li>ol:first-child,
-		li>ul:first-child {
-			margin-block-start: 0.6em;
-		}
-
-		ul>li {
-			list-style: disc;
-		}
-
-		ul.to-do-list {
-			padding-inline-start: 0;
-		}
-
-		ul.to-do-list>li {
-			list-style: none;
-		}
-
-		.to-do-children-checked {
-			text-decoration: line-through;
-			opacity: 0.375;
-		}
-
-		ul.toggle>li {
-			list-style: none;
-		}
-
-		ul {
-			padding-inline-start: 1.7em;
-		}
-
-		ul>li {
-			padding-left: 0.1em;
-		}
-
-		ol {
-			padding-inline-start: 1.6em;
-		}
-
-		ol>li {
-			padding-left: 0.2em;
-		}
-
-		.mono ol {
-			padding-inline-start: 2em;
-		}
-
-		.mono ol>li {
-			text-indent: -0.4em;
-		}
-
-		.toggle {
-			padding-inline-start: 0em;
-			list-style-type: none;
-		}
-
-		/* Indent toggle children */
-		.toggle>li>details {
-			padding-left: 1.7em;
-		}
-
-		.toggle>li>details>summary {
-			margin-left: -1.1em;
-		}
-
-		.selected-value {
-			display: inline-block;
-			padding: 0 0.5em;
-			background: rgba(206, 205, 202, 0.5);
-			border-radius: 3px;
-			margin-right: 0.5em;
-			margin-top: 0.3em;
-			margin-bottom: 0.3em;
-			white-space: nowrap;
-		}
-
-		.collection-title {
-			display: inline-block;
-			margin-right: 1em;
-		}
-
-		.page-description {
-			margin-bottom: 2em;
-		}
-
-		.simple-table {
-			margin-top: 1em;
-			font-size: 0.875rem;
-			empty-cells: show;
-		}
-
-		.simple-table td {
-			height: 29px;
-			min-width: 120px;
-		}
-
-		.simple-table th {
-			height: 29px;
-			min-width: 120px;
-		}
-
-		.simple-table-header-color {
-			background: rgb(247, 246, 243);
-			color: black;
-		}
-
-		.simple-table-header {
-			font-weight: 500;
-		}
-
-		time {
-			opacity: 0.5;
-		}
-
-		.icon {
-			display: inline-block;
-			max-width: 1.2em;
-			max-height: 1.2em;
-			text-decoration: none;
-			vertical-align: text-bottom;
-			margin-right: 0.5em;
-		}
-
-		img.icon {
-			border-radius: 3px;
-		}
-
-		.user-icon {
-			width: 1.5em;
-			height: 1.5em;
-			border-radius: 100%;
-			margin-right: 0.5rem;
-		}
-
-		.user-icon-inner {
-			font-size: 0.8em;
-		}
-
-		.text-icon {
-			border: 1px solid #000;
-			text-align: center;
-		}
-
-		.page-cover-image {
-			display: block;
-			object-fit: cover;
-			width: 100%;
-			max-height: 30vh;
-		}
-
-		.page-header-icon {
-			font-size: 3rem;
-			margin-bottom: 1rem;
-		}
-
-		.page-header-icon-with-cover {
-			margin-top: -0.72em;
-			margin-left: 0.07em;
-		}
-
-		.page-header-icon img {
-			border-radius: 3px;
-		}
-
-		.link-to-page {
-			margin: 1em 0;
-			padding: 0;
-			border: none;
-			font-weight: 500;
-		}
-
-		p>.user {
-			opacity: 0.5;
-		}
-
-		td>.user,
-		td>time {
-			white-space: nowrap;
-		}
-
-		input[type="checkbox"] {
-			transform: scale(1.5);
-			margin-right: 0.6em;
-			vertical-align: middle;
-		}
-
-		p {
-			margin-top: 0.5em;
-			margin-bottom: 0.5em;
-		}
-
-		.image {
-			border: none;
-			margin: 1.5em 0;
-			padding: 0;
-			border-radius: 0;
-			text-align: center;
-		}
-
-		.code,
-		code {
-			background: rgba(135, 131, 120, 0.15);
-			border-radius: 3px;
-			padding: 0.2em 0.4em;
-			border-radius: 3px;
-			font-size: 85%;
-			tab-size: 2;
-		}
-
-		code {
-			color: #eb5757;
-		}
-
-		.code {
-			padding: 1.5em 1em;
-		}
-
-		.code-wrap {
-			white-space: nowrap;
-			word-break: break-all;
-		}
-
-		.code>code {
-			background: none;
-			padding: 0;
-			font-size: 100%;
-			color: inherit;
-		}
-
-		blockquote {
-			font-size: 1.25em;
-			margin: 1em 0;
-			padding-left: 1em;
-			border-left: 3px solid rgb(55, 53, 47);
-		}
-
-		.bookmark {
-			text-decoration: none;
-			max-height: 8em;
-			padding: 0;
-			display: flex;
-			width: 100%;
-			align-items: stretch;
-		}
-
-		.bookmark-title {
-			font-size: 0.85em;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			height: 1.75em;
-			white-space: nowrap;
-		}
-
-		.bookmark-text {
-			display: flex;
-			flex-direction: column;
-		}
-
-		.bookmark-info {
-			flex: 4 1 180px;
-			padding: 12px 14px 14px;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-		}
-
-		.bookmark-image {
-			width: 33%;
-			flex: 1 1 180px;
-			display: block;
-			position: relative;
-			object-fit: cover;
-			border-radius: 1px;
-		}
-
-		.bookmark-description {
-			color: rgba(55, 53, 47, 0.6);
-			font-size: 0.75em;
-			overflow: hidden;
-			max-height: 4.5em;
-			word-break: break-word;
-		}
-
-		.bookmark-href {
-			font-size: 0.75em;
-			margin-top: 0.25em;
-		}
-
-		.sans {
-			font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
-		}
-
-		.code {
-			font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-		}
-
-		.serif {
-			font-family: Lyon-Text, Georgia, ui-serif, serif;
-		}
-
-		.mono {
-			font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-		}
-
-		.pdf .sans {
-			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP';
-		}
-
-		.pdf:lang(zh-CN) .sans {
-			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC';
-		}
-
-		.pdf:lang(zh-TW) .sans {
-			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC';
-		}
-
-		.pdf:lang(ko-KR) .sans {
-			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR';
-		}
-
-		.pdf .code {
-			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
-		}
-
-		.pdf:lang(zh-CN) .code {
-			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
-		}
-
-		.pdf:lang(zh-TW) .code {
-			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
-		}
-
-		.pdf:lang(ko-KR) .code {
-			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
-		}
-
-		.pdf .serif {
-			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP';
-		}
-
-		.pdf:lang(zh-CN) .serif {
-			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC';
-		}
-
-		.pdf:lang(zh-TW) .serif {
-			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC';
-		}
-
-		.pdf:lang(ko-KR) .serif {
-			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR';
-		}
-
-		.pdf .mono {
-			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
-		}
-
-		.pdf:lang(zh-CN) .mono {
-			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
-		}
-
-		.pdf:lang(zh-TW) .mono {
-			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
-		}
-
-		.pdf:lang(ko-KR) .mono {
-			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
-		}
-
-		.highlight-default {
-			color: rgba(50, 48, 44, 1);
-		}
-
-		.highlight-gray {
-			color: rgba(115, 114, 110, 1);
-			fill: rgba(115, 114, 110, 1);
-		}
-
-		.highlight-brown {
-			color: rgba(159, 107, 83, 1);
-			fill: rgba(159, 107, 83, 1);
-		}
-
-		.highlight-orange {
-			color: rgba(217, 115, 13, 1);
-			fill: rgba(217, 115, 13, 1);
-		}
-
-		.highlight-yellow {
-			color: rgba(203, 145, 47, 1);
-			fill: rgba(203, 145, 47, 1);
-		}
-
-		.highlight-teal {
-			color: rgba(68, 131, 97, 1);
-			fill: rgba(68, 131, 97, 1);
-		}
-
-		.highlight-blue {
-			color: rgba(51, 126, 169, 1);
-			fill: rgba(51, 126, 169, 1);
-		}
-
-		.highlight-purple {
-			color: rgba(144, 101, 176, 1);
-			fill: rgba(144, 101, 176, 1);
-		}
-
-		.highlight-pink {
-			color: rgba(193, 76, 138, 1);
-			fill: rgba(193, 76, 138, 1);
-		}
-
-		.highlight-red {
-			color: rgba(205, 60, 58, 1);
-			fill: rgba(205, 60, 58, 1);
-		}
-
-		.highlight-default_background {
-			color: rgba(50, 48, 44, 1);
-		}
-
-		.highlight-gray_background {
-			background: rgba(248, 248, 247, 1);
-		}
-
-		.highlight-brown_background {
-			background: rgba(244, 238, 238, 1);
-		}
-
-		.highlight-orange_background {
-			background: rgba(251, 236, 221, 1);
-		}
-
-		.highlight-yellow_background {
-			background: rgba(251, 243, 219, 1);
-		}
-
-		.highlight-teal_background {
-			background: rgba(237, 243, 236, 1);
-		}
-
-		.highlight-blue_background {
-			background: rgba(231, 243, 248, 1);
-		}
-
-		.highlight-purple_background {
-			background: rgba(248, 243, 252, 1);
-		}
-
-		.highlight-pink_background {
-			background: rgba(252, 241, 246, 1);
-		}
-
-		.highlight-red_background {
-			background: rgba(253, 235, 236, 1);
-		}
-
-		.block-color-default {
-			color: inherit;
-			fill: inherit;
-		}
-
-		.block-color-gray {
-			color: rgba(115, 114, 110, 1);
-			fill: rgba(115, 114, 110, 1);
-		}
-
-		.block-color-brown {
-			color: rgba(159, 107, 83, 1);
-			fill: rgba(159, 107, 83, 1);
-		}
-
-		.block-color-orange {
-			color: rgba(217, 115, 13, 1);
-			fill: rgba(217, 115, 13, 1);
-		}
-
-		.block-color-yellow {
-			color: rgba(203, 145, 47, 1);
-			fill: rgba(203, 145, 47, 1);
-		}
-
-		.block-color-teal {
-			color: rgba(68, 131, 97, 1);
-			fill: rgba(68, 131, 97, 1);
-		}
-
-		.block-color-blue {
-			color: rgba(51, 126, 169, 1);
-			fill: rgba(51, 126, 169, 1);
-		}
-
-		.block-color-purple {
-			color: rgba(144, 101, 176, 1);
-			fill: rgba(144, 101, 176, 1);
-		}
-
-		.block-color-pink {
-			color: rgba(193, 76, 138, 1);
-			fill: rgba(193, 76, 138, 1);
-		}
-
-		.block-color-red {
-			color: rgba(205, 60, 58, 1);
-			fill: rgba(205, 60, 58, 1);
-		}
-
-		.block-color-default_background {
-			color: inherit;
-			fill: inherit;
-		}
-
-		.block-color-gray_background {
-			background: rgba(248, 248, 247, 1);
-		}
-
-		.block-color-brown_background {
-			background: rgba(244, 238, 238, 1);
-		}
-
-		.block-color-orange_background {
-			background: rgba(251, 236, 221, 1);
-		}
-
-		.block-color-yellow_background {
-			background: rgba(251, 243, 219, 1);
-		}
-
-		.block-color-teal_background {
-			background: rgba(237, 243, 236, 1);
-		}
-
-		.block-color-blue_background {
-			background: rgba(231, 243, 248, 1);
-		}
-
-		.block-color-purple_background {
-			background: rgba(248, 243, 252, 1);
-		}
-
-		.block-color-pink_background {
-			background: rgba(252, 241, 246, 1);
-		}
-
-		.block-color-red_background {
-			background: rgba(253, 235, 236, 1);
-		}
-
-		.select-value-color-default {
-			background-color: rgba(84, 72, 49, 0.08);
-		}
-
-		.select-value-color-gray {
-			background-color: rgba(84, 72, 49, 0.15);
-		}
-
-		.select-value-color-brown {
-			background-color: rgba(210, 162, 141, 0.35);
-		}
-
-		.select-value-color-orange {
-			background-color: rgba(224, 124, 57, 0.27);
-		}
-
-		.select-value-color-yellow {
-			background-color: rgba(236, 191, 66, 0.39);
-		}
-
-		.select-value-color-green {
-			background-color: rgba(123, 183, 129, 0.27);
-		}
-
-		.select-value-color-blue {
-			background-color: rgba(93, 165, 206, 0.27);
-		}
-
-		.select-value-color-purple {
-			background-color: rgba(168, 129, 197, 0.27);
-		}
-
-		.select-value-color-pink {
-			background-color: rgba(225, 136, 179, 0.27);
-		}
-
-		.select-value-color-red {
-			background-color: rgba(244, 171, 159, 0.4);
-		}
-
-		.checkbox {
-			display: inline-flex;
-			vertical-align: text-bottom;
-			width: 16;
-			height: 16;
-			background-size: 16px;
-			margin-left: 2px;
-			margin-right: 5px;
-		}
-
-		.checkbox-on {
-			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-		}
-
-		.checkbox-off {
-			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-		}
-	</style>
-</head><body><h1>Spring Security JWT(Json Web Token) Authentication</h1><h1 class="" id="236b255d-72ff-8030-b8bf-c29d6c1d4341">🔐 JWT Authentication – Spring Security
-							(Stateless Auth)</h1><hr id="236b255d-72ff-808e-b64a-d167e22523f6"/><h2 class="" id="236b255d-72ff-80a2-a558-ea04cda8d88d">✅ 1. What is JWT Authentication?</h2><ul class="bulleted-list" id="236b255d-72ff-80d7-a656-fd22f043d615">
-<li style="list-style-type:disc"><strong>JWT</strong> is a <strong>Stateless
-									Authentication</strong> mechanism.</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-807f-b88f-cefbb7b6fbbd">
-<li style="list-style-type:disc">Server <strong>does NOT maintain session state</strong> (no
-								<code>JSESSIONID</code>).</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-80b5-a368-c7b9ca9f87f5">
-<li style="list-style-type:disc">Client sends <strong>JWT token with every request</strong>
-								in the <code>Authorization</code> header.</li>
-</ul><hr id="236b255d-72ff-80e2-a3d0-e3165c7cef36"/><h2 class="" id="236b255d-72ff-804e-96e9-ff4293a19a4f">🧱 2. JWT Structure</h2><p class="" id="236b255d-72ff-801e-a6dd-c56fabde35c9">A JWT has 3 parts:</p><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-808f-b89b-d2a3a88e7a14"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">HEADER.PAYLOAD.SIGNATURE</code></pre><table class="simple-table" id="236b255d-72ff-8057-97b1-f330705618ee">
-<thead class="simple-table-header">
-<tr id="236b255d-72ff-8071-874a-eab7539a8193">
-<th class="simple-table-header-color simple-table-header" id="_MNl">Part</th>
-<th class="simple-table-header-color simple-table-header" id="pSIM">Contains</th>
-</tr>
-</thead>
-<tbody>
-<tr id="236b255d-72ff-808f-a60b-c1a504460be1">
-<td class="" id="_MNl">Header</td>
-<td class="" id="pSIM">Metadata: algorithm (e.g., HS256, RS256)</td>
-</tr>
-<tr id="236b255d-72ff-80b0-aa3a-dcdd62bd473b">
-<td class="" id="_MNl">Payload</td>
-<td class="" id="pSIM">Claims: userId, roles, expiry time, etc.</td>
-</tr>
-<tr id="236b255d-72ff-80d1-a41b-f61268244587">
-<td class="" id="_MNl">Signature</td>
-<td class="" id="pSIM">Signed hash to <strong>prevent tampering</strong></td>
-</tr>
-</tbody>
-</table><h3 class="" id="236b255d-72ff-80af-b66d-c2f027cb6591">🔐 Example:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80f0-8412-ef5e70b69604"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-.
-eyJzdWIiOiJ1c2VySWQiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjkzMDA1NjAwfQ
-.
-SfLkxwRJSMeKKF2QT4fwpo...</code></pre><hr id="236b255d-72ff-8051-9a70-ef9323066b0f"/><h2 class="" id="236b255d-72ff-80ce-944c-c9e963686d61">🔁 3. JWT Authentication Flow</h2><h3 class="" id="236b255d-72ff-8097-8958-c5f4e49c9593">🧾 Step-by-step Breakdown:</h3><p class="" id="236b255d-72ff-8062-8ef5-e3775caee71c">1️⃣ <strong>User Registration
-								(optional)</strong></p><p class="" id="236b255d-72ff-80f8-984d-c446ade8062a"><code>POST /api/user-register</code></p><p class="" id="236b255d-72ff-808a-9ff1-ff512215d84d">→ User created and password hashed (e.g.,
-							using <code>BCryptPasswordEncoder</code>).</p><p class="" id="236b255d-72ff-802d-ba00-e08ff0cf0daa">2️⃣ <strong>Token Generation</strong></p><p class="" id="236b255d-72ff-80d2-9514-c982b5b3a76e"><code>POST /generate-token</code></p><p class="" id="236b255d-72ff-802c-bed3-c1421228f956">→ User sends username/password</p><p class="" id="236b255d-72ff-809d-a471-f1c1d640bc9c">→ If valid: Generate JWT token and return
-							in response</p><p class="" id="236b255d-72ff-8045-93b1-e1f77e9980e7">3️⃣ <strong>Access Resource</strong></p><p class="" id="236b255d-72ff-8040-9837-d0c76707aa42">Client sends JWT in every request:</p><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-80fd-9c5e-d24ace27dba3"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Authorization: Bearer &lt;jwt_token&gt;</code></pre><p class="" id="236b255d-72ff-80f4-b71c-d1d7aca50569">→ Token is verified and user is
-							authenticated</p><p class="" id="236b255d-72ff-80d9-b1fe-e9607e39c60c">4️⃣ <strong>Refresh Token</strong></p><p class="" id="236b255d-72ff-80f7-87ad-fc6ee6f8a413"><code>POST /refresh-token</code></p><p class="" id="236b255d-72ff-8057-bd87-d18c9d2f9083">→ Send refresh token</p><p class="" id="236b255d-72ff-809c-927c-d2635b1f326a">→ Get new access token</p><hr id="236b255d-72ff-8052-b132-ca145f943023"/><h2 class="" id="236b255d-72ff-804d-b5dd-dbcaaa9eb06a">⚙️ 4. Key Components to Implement</h2><h3 class="" id="236b255d-72ff-80c6-99dc-d09b28d4652a">✅ Token Generation:</h3><ul class="bulleted-list" id="236b255d-72ff-8092-b03c-ec456a6f9962">
-<li style="list-style-type:disc">Authenticate using
-								<code>UsernamePasswordAuthenticationToken</code></li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-803d-813f-f9351ef6d887">
-<li style="list-style-type:disc">Use <code>AuthenticationManager</code> and
-								<code>DaoAuthenticationProvider</code></li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-80d5-b78c-e5a57960ba3a">
-<li style="list-style-type:disc">On success → generate token using JWT utility class</li>
-</ul><h3 class="" id="236b255d-72ff-8008-bf08-d186873ebba7">✅ Token Validation:</h3><ul class="bulleted-list" id="236b255d-72ff-80e2-8555-db05481f7b7b">
-<li style="list-style-type:disc">Create <strong>Custom Filter</strong> to intercept each
-								request</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-8030-b754-fb778c7996b5">
-<li style="list-style-type:disc">Parse JWT from <code>Authorization</code> header</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-80d8-bb01-df337f6196ac">
-<li style="list-style-type:disc">Validate:<ul class="bulleted-list" id="236b255d-72ff-80d5-a677-d8b5ac7909ab">
-<li style="list-style-type:circle">Expiry</li>
-</ul>
-<ul class="bulleted-list" id="236b255d-72ff-803b-9c8d-df39e8f41d64">
-<li style="list-style-type:circle">Signature</li>
-</ul>
-<ul class="bulleted-list" id="236b255d-72ff-805e-96ca-e3e815044cd3">
-<li style="list-style-type:circle">Claims</li>
-</ul>
-</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-801d-bf65-cdc0d4fa1b19">
-<li style="list-style-type:disc">If valid:<ul class="bulleted-list" id="236b255d-72ff-80ce-b642-c522de4d4b81">
-<li style="list-style-type:circle">Load <code>UserDetails</code></li>
-</ul>
-<ul class="bulleted-list" id="236b255d-72ff-805e-8f57-d9c1dbcb4059">
-<li style="list-style-type:circle">Create <code>Authentication</code> object</li>
-</ul>
-<ul class="bulleted-list" id="236b255d-72ff-802e-b60a-d144ecff8d38">
-<li style="list-style-type:circle">Set in <code>SecurityContext</code></li>
-</ul>
-</li>
-</ul><h3 class="" id="236b255d-72ff-803b-b49c-c1bea4e1d3ff">✅ Filter Order:</h3><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8015-be58-c82ecf1552b4"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);</code></pre><hr id="236b255d-72ff-8009-86cf-e2faad2a5604"/><h2 class="" id="236b255d-72ff-8042-a288-fe8db21a07b6">📌 5. Spring Security Architecture with
-							JWT</h2><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8017-9eb1-d3826f6248af"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Request
-↓
-Custom JWT Filter
-↓
-AuthenticationManager
-↓
-CustomAuthenticationProvider
-↓
-UserDetailsService (DB or InMemory)
-↓
-PasswordEncoder
-↓
-Authentication (set in SecurityContext)
-↓
-AuthorizationFilter (check role access)
-↓
-Controller</code></pre><hr id="236b255d-72ff-8078-bd0c-f8ff7089a0a5"/><h2 class="" id="236b255d-72ff-80c6-9a4e-d0817e4686a4">🔧 6. AuthenticationManager Logic</h2><ul class="bulleted-list" id="236b255d-72ff-8041-bdfb-c736dee22f5d">
-<li style="list-style-type:disc">Delegates to multiple <code>AuthenticationProvider</code>s
-							</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-80f1-8bb6-cd866abe5bd4">
-<li style="list-style-type:disc">Each <code>Provider</code> must implement
-								<code>supports()</code> method to indicate whether it can handle the request</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-80cf-8264-dc28657f9ec4">
-<li style="list-style-type:disc">In JWT, we use:<ul class="bulleted-list" id="236b255d-72ff-8079-b65a-dc84b395c78b">
-<li style="list-style-type:circle">Default <code>DaoAuthenticationProvider</code>
-										for username/password login</li>
-</ul>
-<ul class="bulleted-list" id="236b255d-72ff-804d-9a36-f8bb8bde8ae4">
-<li style="list-style-type:circle">Custom <code>JwtAuthenticationProvider</code> for
-										token validation</li>
-</ul>
-</li>
-</ul><hr id="236b255d-72ff-8087-9630-da9a1ef34ee3"/><h2 class="" id="236b255d-72ff-805f-babb-de38ae816e03">🛡️ 7. Authorization</h2><ul class="bulleted-list" id="236b255d-72ff-80e3-9d28-f26bead31413">
-<li style="list-style-type:disc">After authentication, <code>AuthorizationFilter</code>
-								ensures role-based access.</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-80ba-9b6a-f0c0c942225d">
-<li style="list-style-type:disc">Same as form or basic auth.</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-8061-b572-d383ee178cc9">
-<li style="list-style-type:disc">E.g.,</li>
-</ul><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8026-a88b-c877a8c2b789"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">http.authorizeHttpRequests()
-  .requestMatchers("/admin/**").hasRole("ADMIN")
-  .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");</code></pre><hr id="236b255d-72ff-804f-88e2-fcb5f79dc847"/><h2 class="" id="236b255d-72ff-8071-81a2-d6cb31b27450">🔑 8. JWT Token Placement in Request</h2><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8087-b648-e98e3c4f1aa0"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Authorization: Bearer &lt;access_token&gt;</code></pre><hr id="236b255d-72ff-80cb-93fc-f6a505e23877"/><h2 class="" id="236b255d-72ff-80cc-a6cc-e09a447d6eec">📂 9. JWT Implementation – What Spring
-							Boot <strong>does NOT</strong> provide</h2><p class="" id="236b255d-72ff-80ce-bb31-dacb2a50b1df">Spring Security <strong>doesn't
-								include JWT by default</strong> because:</p><ul class="bulleted-list" id="236b255d-72ff-80f8-a6a8-f5ae37d0202b">
-<li style="list-style-type:disc">Token structure is app-specific</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-8003-a394-c173e940e11c">
-<li style="list-style-type:disc">Signing strategy may vary (HMAC vs RSA)</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-800f-8ded-cf65e89a4f86">
-<li style="list-style-type:disc">Claims (e.g., <code>email</code>, <code>userId</code>)
-								differ</li>
-</ul><ul class="bulleted-list" id="236b255d-72ff-80c9-b7f1-d99c3729ff00">
-<li style="list-style-type:disc">Refresh strategies vary per use case</li>
-</ul><blockquote class="" id="236b255d-72ff-80ef-acb1-ce9655496a43">⚠️ You must implement it using
-							custom filters, providers, utilities.</blockquote><hr id="236b255d-72ff-80ab-96fb-c4bb1fecb2d9"/><h2 class="" id="236b255d-72ff-8070-9399-ec0dc7bfaf6c">🧠 10. Advantages of JWT</h2><table class="simple-table" id="236b255d-72ff-800e-8c5d-fc9fed7f5d6d">
-<thead class="simple-table-header">
-<tr id="236b255d-72ff-80cf-bdea-fde7de009acb">
-<th class="simple-table-header-color simple-table-header" id="jxAj">Feature</th>
-<th class="simple-table-header-color simple-table-header" id="I]Pi">Benefit</th>
-</tr>
-</thead>
-<tbody>
-<tr id="236b255d-72ff-806c-9e73-e03f7ef5a7f8">
-<td class="" id="jxAj">✅ Stateless</td>
-<td class="" id="I]Pi">No need to store session</td>
-</tr>
-<tr id="236b255d-72ff-8047-873a-f8f52960585e">
-<td class="" id="jxAj">✅ Scalable</td>
-<td class="" id="I]Pi">Suitable for distributed systems</td>
-</tr>
-<tr id="236b255d-72ff-80c8-ab85-f36a175b8eed">
-<td class="" id="jxAj">✅ Secure</td>
-<td class="" id="I]Pi">Signed &amp; verifiable (if using HTTPS)</td>
-</tr>
-<tr id="236b255d-72ff-80b2-8cc9-cd139378e77f">
-<td class="" id="jxAj">✅ Portable</td>
-<td class="" id="I]Pi">Can be used across services/systems</td>
-</tr>
-<tr id="236b255d-72ff-8073-8581-ed5e3c28d3d6">
-<td class="" id="jxAj">✅ Flexible</td>
-<td class="" id="I]Pi">Custom claims supported</td>
-</tr>
-</tbody>
-</table><hr id="236b255d-72ff-80b4-af5e-e72d20095001"/><h2 class="" id="236b255d-72ff-80b5-985b-ebd55ca74561">🚫 11. Disadvantages of JWT</h2><table class="simple-table" id="236b255d-72ff-8054-a8e0-e63e46968252">
-<thead class="simple-table-header">
-<tr id="236b255d-72ff-804c-8212-ee501ce0535c">
-<th class="simple-table-header-color simple-table-header" id="Sawp">Problem</th>
-<th class="simple-table-header-color simple-table-header" id="WtOE">Why</th>
-</tr>
-</thead>
-<tbody>
-<tr id="236b255d-72ff-80b8-b6d7-f183eddb763f">
-<td class="" id="Sawp">❌ Can’t invalidate token easily</td>
-<td class="" id="WtOE">Unless using a token blacklist or DB</td>
-</tr>
-<tr id="236b255d-72ff-8043-8d80-e7d13239f6ed">
-<td class="" id="Sawp">❌ Can be hijacked</td>
-<td class="" id="WtOE">If HTTPS not enforced</td>
-</tr>
-<tr id="236b255d-72ff-807e-afc2-c690a0480efe">
-<td class="" id="Sawp">❌ Size overhead</td>
-<td class="" id="WtOE">Bigger than session ID</td>
-</tr>
-<tr id="236b255d-72ff-80ce-a9d3-f2f9f3dc6e18">
-<td class="" id="Sawp">❌ Short-lived tokens needed</td>
-<td class="" id="WtOE">For security, which needs refresh logic</td>
-</tr>
-</tbody>
-</table><hr id="236b255d-72ff-800d-b56d-d371f78bce12"/><h2 class="" id="236b255d-72ff-80c3-8e2d-f53f67026cfd">🔁 12. Refresh Token Strategy</h2><table class="simple-table" id="236b255d-72ff-806b-9ee9-f19aa3f5ef5e">
-<thead class="simple-table-header">
-<tr id="236b255d-72ff-80f2-8d11-f987224c2aa5">
-<th class="simple-table-header-color simple-table-header" id="Gd}e">Token Type</th>
-<th class="simple-table-header-color simple-table-header" id="bMN&lt;">Duration</th>
-<th class="simple-table-header-color simple-table-header" id="SfXm">Stored in</th>
-</tr>
-</thead>
-<tbody>
-<tr id="236b255d-72ff-80d0-a18c-f8067f6affe0">
-<td class="" id="Gd}e">Access Token</td>
-<td class="" id="bMN&lt;">Short-lived (e.g., 5-15 mins)</td>
-<td class="" id="SfXm">Header</td>
-</tr>
-<tr id="236b255d-72ff-80de-9111-f514053b0fec">
-<td class="" id="Gd}e">Refresh Token</td>
-<td class="" id="bMN&lt;">Long-lived (e.g., 7-30 days)</td>
-<td class="" id="SfXm">DB or Secure Cookie</td>
-</tr>
-</tbody>
-</table><blockquote class="" id="236b255d-72ff-8084-b89f-c8c6bfacc1a8">Refresh token is used to generate
-							new access token without login.</blockquote><hr id="236b255d-72ff-8028-b04b-c115acd41a1f"/><h2 class="" id="236b255d-72ff-8082-965b-fbd1ec67cddd">📦 13. Required Dependencies</h2><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-8002-b579-c0327ad0c533"><code class="language-XML" style="white-space:pre-wrap;word-break:break-all">&lt;!-- JWT --&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
-  &lt;artifactId&gt;jjwt&lt;/artifactId&gt;
-  &lt;version&gt;0.9.1&lt;/version&gt;
-&lt;/dependency&gt;</code></pre><hr id="236b255d-72ff-808a-b81f-ca3b85f4dec2"/><h2 class="" id="236b255d-72ff-80d5-b4a6-cdf3c862e016">🧪 14. Sample Token Generation Code</h2><script crossorigin="anonymous" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script><link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" referrerpolicy="no-referrer" rel="stylesheet"/><pre class="code code-wrap" id="236b255d-72ff-808b-b240-dba2c73101c0"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">String token = Jwts.builder()
-  .setSubject(user.getUsername())
-  .claim("role", user.getRole())
-  .setIssuedAt(new Date(System.currentTimeMillis()))
-  .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
-  .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-  .compact();</code></pre><hr id="236b255d-72ff-8071-8cc4-d0d54126835b"/><h2 class="" id="236b255d-72ff-80f4-b513-e3fe91762e7b">✨ 15. Summary Table – Auth Methods
-							Comparison</h2><table class="simple-table" id="236b255d-72ff-806a-89c3-c4e7ffa2bc7b">
-<thead class="simple-table-header">
-<tr id="236b255d-72ff-800d-a781-c3498d513b70">
-<th class="simple-table-header-color simple-table-header" id="Hq`N">Feature</th>
-<th class="simple-table-header-color simple-table-header" id="ZREF">Form Login</th>
-<th class="simple-table-header-color simple-table-header" id="gaKU">Basic Auth</th>
-<th class="simple-table-header-color simple-table-header" id="v|Rq">JWT (Token)</th>
-</tr>
-</thead>
-<tbody>
-<tr id="236b255d-72ff-808e-8cfd-c2a3336d9d44">
-<td class="" id="Hq`N">Stateful</td>
-<td class="" id="ZREF">✅ Yes</td>
-<td class="" id="gaKU">❌ No</td>
-<td class="" id="v|Rq">❌ No</td>
-</tr>
-<tr id="236b255d-72ff-80fe-8f99-f855ae76bb96">
-<td class="" id="Hq`N">Session Used</td>
-<td class="" id="ZREF">✅ Yes</td>
-<td class="" id="gaKU">❌ No</td>
-<td class="" id="v|Rq">❌ No</td>
-</tr>
-<tr id="236b255d-72ff-8006-bf2d-fbed57c9fbc3">
-<td class="" id="Hq`N">Token Sent Per Req</td>
-<td class="" id="ZREF">❌ No</td>
-<td class="" id="gaKU">✅ Yes</td>
-<td class="" id="v|Rq">✅ Yes</td>
-</tr>
-<tr id="236b255d-72ff-8057-85c3-ce14b5052be9">
-<td class="" id="Hq`N">Scalable</td>
-<td class="" id="ZREF">❌ Hard</td>
-<td class="" id="gaKU">❌ Hard</td>
-<td class="" id="v|Rq">✅ Yes</td>
-</tr>
-<tr id="236b255d-72ff-802e-9d49-fe513b67f22a">
-<td class="" id="Hq`N">Secure over HTTPS</td>
-<td class="" id="ZREF">✅</td>
-<td class="" id="gaKU">✅</td>
-<td class="" id="v|Rq">✅</td>
-</tr>
-<tr id="236b255d-72ff-8054-9cab-d29ce95c6cbf">
-<td class="" id="Hq`N">Custom Claims</td>
-<td class="" id="ZREF">❌ No</td>
-<td class="" id="gaKU">❌ No</td>
-<td class="" id="v|Rq">✅ Yes</td>
-</tr>
-<tr id="236b255d-72ff-80d4-b0b2-fda0e606d3af">
-<td class="" id="Hq`N">Logout support</td>
-<td class="" id="ZREF">✅ Easy</td>
-<td class="" id="gaKU">❌</td>
-<td class="" id="v|Rq">❌ (custom)</td>
-</tr>
-</tbody>
-</table><hr id="236b255d-72ff-80da-a7e4-e463a03497e3"/><h2 class="" id="236b255d-72ff-809c-b7eb-d64085764baf">🚀 Final Notes (Interview Takeaways)</h2><table class="simple-table" id="236b255d-72ff-801b-84f3-c81bdc01be81">
-<thead class="simple-table-header">
-<tr id="236b255d-72ff-80fc-975a-f2815cefd860">
-<th class="simple-table-header-color simple-table-header" id="|R^v">Topic</th>
-<th class="simple-table-header-color simple-table-header" id="fd;o">Key Point</th>
-</tr>
-</thead>
-<tbody>
-<tr id="236b255d-72ff-8030-aa28-e91787d819aa">
-<td class="" id="|R^v">Filter</td>
-<td class="" id="fd;o">Custom JWT filter before
-										<code>UsernamePasswordAuthenticationFilter</code></td>
-</tr>
-<tr id="236b255d-72ff-8029-868c-c19ab6d1ff8c">
-<td class="" id="|R^v">AuthManager</td>
-<td class="" id="fd;o">Delegates to custom provider using <code>supports()</code>
-										method</td>
-</tr>
-<tr id="236b255d-72ff-80c8-927f-fdc68d73f079">
-<td class="" id="|R^v">Token Validation</td>
-<td class="" id="fd;o">Signature + Expiry + Claims</td>
-</tr>
-<tr id="236b255d-72ff-804a-84ee-cdb020f7b78d">
-<td class="" id="|R^v">Stateless</td>
-<td class="" id="fd;o">No sessions, scalable</td>
-</tr>
-<tr id="236b255d-72ff-805f-bbe9-f009f01b542c">
-<td class="" id="|R^v">Role-based access</td>
-<td class="" id="fd;o">Same as other Spring Security methods</td>
-</tr>
-<tr id="236b255d-72ff-8062-af59-d2d6060d373b">
-<td class="" id="|R^v">Refresh strategy</td>
-<td class="" id="fd;o">Implement refresh token logic separately</td>
-</tr>
-<tr id="236b255d-72ff-80aa-b36f-f0b99899c292">
-<td class="" id="|R^v">Production</td>
-<td class="" id="fd;o">Always use HTTPS, store tokens securely</td>
-</tr>
-</tbody>
-</table><p class="" id="236b255d-72ff-8084-9c18-d78b8829f554">
-</p></body></html>
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Spring Boot [Github]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: nowrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: nowrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><h1><a href="https://drive.google.com/file/d/10INBRW_knqIaZjdqR81SqiGXcKLLeRvz/view?usp=drive_link">JWT Explained | JWT vs SessionID</a></h1></body></html>
