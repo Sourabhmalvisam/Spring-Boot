@@ -33,14 +33,26 @@ for details in soup.find_all("details"):
     topic_folder = os.path.join(base_dir, safe_folder_name)
     os.makedirs(topic_folder, exist_ok=True)
 
+    # Get original href from <summary> if available
+    summary_link = summary_tag.find("a")
+    summary_href = summary_link.get("href") if summary_link else None
+
     # Copy CSS/head from main page
     head_html = soup.head.decode()
 
     # Create topic HTML with same CSS
     topic_soup = BeautifulSoup(f"<html>{head_html}<body></body></html>", "html.parser")
     topic_body = topic_soup.body
-    topic_body.append(topic_soup.new_tag("h1"))
-    topic_body.h1.string = topic_title
+
+    # Add title (linked if href exists)
+    h1_tag = topic_soup.new_tag("h1")
+    if summary_href:
+        a_tag = topic_soup.new_tag("a", href=summary_href)
+        a_tag.string = topic_title
+        h1_tag.append(a_tag)
+    else:
+        h1_tag.string = topic_title
+    topic_body.append(h1_tag)
 
     # Process images
     for img in details.find_all("img"):
@@ -79,4 +91,4 @@ for details in soup.find_all("details"):
 with open(html_file, "w", encoding="utf-8") as f:
     f.write(str(soup))
 
-print("✅ Done. Figure cleaned, index body style updated, pages created.")
+print("✅ Done. Pages created, figures cleaned, titles linked, index updated.")
